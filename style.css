@@ -470,3 +470,22 @@ footer {
     50% { opacity: 0.5; }
     100% { opacity: 1; }
 }
+
+#bot-status-badge.online .status-dot {
+    background-color: #00ff41; /* 綠色 */
+    box-shadow: 0 0 10px #00ff41;
+}
+
+#bot-status-badge.offline .status-dot {
+    background-color: #ff3e3e; /* 紅色 */
+    box-shadow: 0 0 10px #ff3e3e;
+}
+
+.status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+    background-color: #888; /* 預設灰燈 */
+}
