@@ -17,15 +17,15 @@ async function updateBotStatus() {
         if (bot && bot.status !== 'offline') {
             // 正常上線中
             badge.className = 'badge online';
-            statusText.innerText = '系統運作中';
+            status-text.innerText = '系統運作中';
         } else {
             // 離線
             badge.className = 'badge offline';
-            statusText.innerText = '服務離線中';
+            status-text.innerText = '服務離線中';
         }
     } catch (error) {
         console.error("Status check failed:", error);
-        statusText.innerText = '連線超時';
+        status-text.innerText = '連線超時';
     }
 }
 
