@@ -91,3 +91,26 @@ window.addEventListener('load', () => {
     updateBotStatus();
     setInterval(updateBotStatus, 60000); 
 });
+
+// --- 指令過濾邏輯 (僅當在 commands.html 時執行) ---
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        // 切換按鈕樣式
+        document.querySelector('.filter-btn.active').classList.remove('active');
+        btn.classList.add('active');
+
+        const filter = btn.getAttribute('data-filter');
+        const cards = document.querySelectorAll('.command-card');
+
+        cards.forEach(card => {
+            if (filter === 'all' || card.classList.contains(filter)) {
+                card.style.display = 'flex';
+                // 重新觸發 reveal 動畫效果
+                setTimeout(() => card.style.opacity = '1', 10);
+            } else {
+                card.style.display = 'none';
+                card.style.opacity = '0';
+            }
+        });
+    });
+});
