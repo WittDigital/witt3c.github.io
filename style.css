@@ -453,16 +453,17 @@ footer {
 }
 
 /* 在線時的綠燈效果 (呼吸燈) */
-.badge.online .status-dot {
-    background: #00ff41;
-    box-shadow: 0 0 8px #00ff41;
-    animation: pulse 2s infinite;
+/* 修正後的 CSS 權重 */
+.badge.online {
+    background: rgba(0, 255, 65, 0.1);
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    color: #00ff41;
 }
 
-/* 離線時的紅燈效果 */
-.badge.offline .status-dot {
-    background: #ff3e3e;
-    box-shadow: 0 0 8px #ff3e3e;
+.badge.offline {
+    background: rgba(255, 62, 62, 0.1);
+    border: 1px solid rgba(255, 62, 62, 0.3);
+    color: #ff3e3e;
 }
 
 @keyframes pulse {
