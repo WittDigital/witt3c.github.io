@@ -576,3 +576,28 @@ footer {
         filter: blur(80px); /* 減輕手機 GPU 負擔 */
     }
 }
+
+/* 讓點點動起來的動畫 */
+.loading-dots::after {
+    content: '';
+    animation: dots 1.5s infinite;
+}
+
+@keyframes dots {
+    0%   { content: ''; }
+    25%  { content: '.'; }
+    50%  { content: '..'; }
+    75%  { content: '...'; }
+    100% { content: ''; }
+}
+
+/* 讓整行文字有呼吸閃爍感 (選用) */
+.detecting {
+    opacity: 1;
+    animation: pulse-text 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse-text {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
