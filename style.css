@@ -719,13 +719,32 @@ footer {
     padding-top: 120px; /* 避開固定導覽列 */
 }
 
+/* --- 指令網格佈局 (優化版：區分手機與電腦) --- */
 .commands-grid {
     display: grid;
-    /* 將原本的 minmax(320px, 1fr) 修改如下： */
-    grid-template-columns: repeat(auto-fill, minmax(320px, 360px)); /* <-- 固定最大寬度 */
-    gap: 2rem;
+    /* 1. 預設寬度 (適用於平板與一般筆電) */
+    grid-template-columns: repeat(auto-fill, minmax(320px, 450px)); 
+    gap: 2.5rem;
     margin-top: 3rem;
-    justify-content: center; /* [新增] 當卡片變少時，讓它們保持置中 */
+    justify-content: center;
+}
+
+/* 2. 電腦版大螢幕優化 (寬度大於 1200px) */
+@media (min-width: 1200px) {
+    .commands-grid {
+        /* 讓卡片在電腦上更寬，最大可以到 500px，這樣影片細節才清楚 */
+        grid-template-columns: repeat(auto-fill, minmax(400px, 500px));
+        gap: 3rem;
+    }
+}
+
+/* 3. 手機版保持原樣 (寬度小於 768px) */
+@media (max-width: 768px) {
+    .commands-grid {
+        /* 手機版維持你現在覺得不錯的樣式，一張卡片佔滿寬度 */
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
 }
 
 /* 指令卡片外框 (複用部分 glass-card 但取消內距) */
