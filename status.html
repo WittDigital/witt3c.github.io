@@ -1,30 +1,35 @@
+<script>
 async function updateBotStatus() {
-    const SERVER_ID = '1330733636219043961'; // 你剛才測試成功的 Server ID
+    const SERVER_ID = '1048586401618329670'; // 你的伺服器 ID
     const TARGET_BOT_NAME = '維特witt 助手'; // 你的 Bot 名字
+    
+    const badge = document.getElementById('bot-status-badge');
+    const statusText = badge.querySelector('.status-text');
 
     try {
+        // 直接向 Discord 官方獲取數據
         const response = await fetch(`https://discord.com/api/guilds/${SERVER_ID}/widget.json`);
         const data = await response.json();
 
-        // 在 members 陣列中尋找名字相符且狀態不是 offline 的成員
+        // 檢查成員名單中是否有你的 Bot
         const bot = data.members.find(m => m.username === TARGET_BOT_NAME);
 
-        const statusElement = document.getElementById('bot-status-display');
-        
         if (bot && bot.status !== 'offline') {
-            // 狀態：正常 (Online / Idle / DND)
-            statusElement.innerHTML = `<span style="color: #00ff41;">● OPERATIONAL</span>`;
-            console.log("系統回報：Bot 正常運作中");
+            // 正常上線中
+            badge.className = 'badge online';
+            statusText.innerText = '系統運作中';
         } else {
-            // 狀態：找不到或離線
-            statusElement.innerHTML = `<span style="color: #ff3e3e;">○ SYSTEM OFFLINE</span>`;
-            console.log("系統回報：Bot 已離線");
+            // 離線
+            badge.className = 'badge offline';
+            statusText.innerText = '服務離線中';
         }
     } catch (error) {
-        console.error("無法取得 Discord 狀態:", error);
+        console.error("Status check failed:", error);
+        statusText.innerText = '連線超時';
     }
 }
 
-// 每 30 秒自動更新一次，保持數據最新
-setInterval(updateBotStatus, 30000);
+// 啟動後立即檢查一次，隨後每 30 秒循環
 updateBotStatus();
+setInterval(updateBotStatus, 30000);
+</script>
