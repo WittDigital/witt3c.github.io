@@ -1105,3 +1105,99 @@ footer {
     0%, 100% { opacity: 0.6; }
     50% { opacity: 1; }
 }
+
+/* =========================================
+   指令介紹頁面專屬樣式 (補齊缺失部分)
+   ========================================= */
+
+/* 指令網格佈局 */
+.commands-section {
+    padding-top: 120px; /* 避開固定導覽列 */
+}
+
+.commands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+/* 指令卡片外框 (複用部分 glass-card 但取消內距) */
+.command-card {
+    padding: 0 !important; 
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 模擬終端機頂部欄 */
+.terminal-header {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.terminal-header .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.dot.red { background: #ff5f56; }
+.dot.yellow { background: #ffbd2e; }
+.dot.green { background: #27c93f; }
+
+.command-name {
+    margin-left: 10px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    color: var(--accent-1);
+}
+
+/* 指令展示圖區塊 */
+.command-demo img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+/* 指令文字資訊區 */
+.command-info {
+    padding: 1.5rem;
+}
+
+.command-info h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.command-info p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 1.2rem;
+}
+
+/* 程式碼標籤樣式 */
+.code-badge {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--accent-1);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.8rem;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+/* 手機版適配微調 */
+@media (max-width: 480px) {
+    .commands-grid {
+        grid-template-columns: 1fr;
+    }
+}
