@@ -431,3 +431,42 @@ footer {
         font-size: 2.8rem;
     }
 }
+
+/* 狀態標籤基礎樣式 */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    font-family: monospace;
+}
+
+/* 狀態圓點 */
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #888; /* 預設灰色 */
+    transition: all 0.3s ease;
+}
+
+/* 在線時的綠燈效果 (呼吸燈) */
+.badge.online .status-dot {
+    background: #00ff41;
+    box-shadow: 0 0 8px #00ff41;
+    animation: pulse 2s infinite;
+}
+
+/* 離線時的紅燈效果 */
+.badge.offline .status-dot {
+    background: #ff3e3e;
+    box-shadow: 0 0 8px #ff3e3e;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
