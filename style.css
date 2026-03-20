@@ -795,9 +795,67 @@ footer {
 
 .command-name {
     margin-left: 10px;
-    font-family: 'Fira Code', monospace;
-    font-size: 1rem;
-    color: #b7c9ff;
+    font-family: 'Fira Code', 'Roboto Mono', monospace;
+    font-size: 0.95rem;
+    font-weight: 500;
+    
+    background: rgba(0, 0, 0, 0.4); 
+    color: var(--accent-1); 
+    
+    /* 關鍵 1: 修改內距，並確保 box-sizing 包含內距與邊框 */
+    box-sizing: border-box; 
+    padding: 4px 0; /* 左右內距移到動畫裡控制，避免卡住 */
+    
+    display: inline-block; 
+    width: 0;
+    max-width: max-content; 
+    
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: middle;
+
+    /* 關鍵 2: 游標位置 */
+    border-right: 3px solid var(--accent-1); 
+
+    animation: 
+        typing-dynamic-witt 5s steps(30, end) infinite,
+        cursor-blink-witt 0.8s infinite step-start;
+}
+
+/* --- 動畫定義：動態寬度 + 內距縮放 --- */
+@keyframes typing-dynamic-witt {
+    0% { 
+        width: 0; 
+        padding-left: 0; 
+        padding-right: 0;
+        border-right-color: var(--accent-1);
+    }
+    /* 0% - 40%: 打字中，並同時展開左右內距 */
+    40% { 
+        width: 100%; 
+        padding-left: 12px; 
+        padding-right: 12px; 
+    } 
+    /* 40% - 90%: 停頓停留 */
+    90% { 
+        width: 100%; 
+        padding-left: 12px; 
+        padding-right: 12px; 
+        border-right-color: var(--accent-1);
+    } 
+    /* 95% - 100%: 快速消失，連同內距與游標顏色一起清空 */
+    95%, 100% { 
+        width: 0; 
+        padding-left: 0; 
+        padding-right: 0;
+        border-right-color: transparent; /* 消失時藏起游標線 */
+    }
+}
+
+/* 游標閃爍：維持原有節奏 */
+@keyframes cursor-blink-witt {
+    0%, 100% { border-right-color: var(--accent-1); }
+    50% { border-right-color: transparent; }
 }
 
 /* 指令展示圖區塊 */
