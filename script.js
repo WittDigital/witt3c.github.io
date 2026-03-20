@@ -137,3 +137,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const revealElements = document.querySelectorAll('.reveal');
     revealElements.forEach(el => revealObserver.observe(el));
 });
+
+const videoObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+            // 滑到畫面上時才載入並播放
+            video.play().catch(e => console.log("等待手動觸發播放"));
+        } else {
+            // 離開畫面暫停節省效能
+            video.pause();
+        }
+    });
+}, { threshold: 0.1 });
+
+// 記得在頁面載入後執行
+document.querySelectorAll('.demo-video').forEach(v => videoObserver.observe(v));
