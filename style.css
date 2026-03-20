@@ -953,11 +953,39 @@ footer {
 }
 
 /* --- 僅新增：指令影片專屬美化 --- */
+/* 幫影片容器加一個掃描線層 */
 .command-demo {
-    width: 100%;
-    background: #000;
+    position: relative;
     overflow: hidden;
-    line-height: 0; /* 消除影片下方的微小間隙 */
+    background: #000;
+}
+
+/* 當影片還沒播放時（或是正在載入），顯示掃描線 */
+.command-demo::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    /* 製作黑色的細橫線效果 */
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.25) 50%
+    ), linear-gradient(
+        90deg, 
+        rgba(255, 0, 0, 0.03), 
+        rgba(0, 255, 0, 0.01), 
+        rgba(0, 0, 255, 0.03)
+    );
+    background-size: 100% 4px, 3px 100%;
+    z-index: 2;
+    pointer-events: none; /* 確保不影響點擊影片 */
+    opacity: 0.6;
+}
+
+/* 當影片開始播放後，可以考慮把掃描線變淡（選用） */
+.command-demo:hover::before {
+    opacity: 0.3;
+    transition: opacity 0.5s ease;
 }
 /* --- 最終修正：確保影片完整顯示不裁切 --- */
 .command-demo video {
