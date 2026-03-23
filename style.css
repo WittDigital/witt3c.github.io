@@ -174,19 +174,19 @@ body {
 }
 
 /* 工具箱樣式 */
-.tool-stack {
+.contact-stack {
     margin-top: 2rem;
     padding-top: 1rem;
     border-top: 1px dashed var(--glass-border);
 }
 
-.tool-stack small {
+.contact-stack small {
     color: var(--text-secondary);
     display: block;
     margin-bottom: 0.5rem;
 }
 
-.tool-icons {
+.contact-links {
     display: flex;
     gap: 15px;
     font-size: 0.8rem;
