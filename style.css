@@ -197,3 +197,47 @@ footer {
     .main-title { font-size: 3.5rem; }
     .portal-card { padding: 2rem; }
 }
+
+/* --- Logo 開場動畫專用 CSS --- */
+
+/* 1. 初始狀態：Logo 在螢幕正中央 */
+.hero-mini.initial-center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.5); /* 放大 1.5 倍佔據中心 */
+    text-align: center;
+    z-index: 100;
+    transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1); /* 流暢的移動曲線 */
+}
+
+/* 2. 動畫後的狀態：Logo 回到左上角 */
+.hero-mini.active-top {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: translate(0, 0) scale(1);
+    text-align: left; /* 回到左側對齊，更有個人站質感 */
+    margin-bottom: 3rem;
+    margin-top: 2rem;
+}
+
+/* 3. 卡片初始隱藏 */
+.contents-hidden {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    pointer-events: none;
+}
+
+/* 4. 卡片顯現 */
+.contents-show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* 讓 Tagline 和 Badge 在 Logo 放大時有呼吸感 */
+.hero-mini.initial-center .tagline {
+    animation: fadeInUp 0.8s ease forwards 0.3s;
+}
