@@ -72,7 +72,8 @@ body {
 .sidebar.active-left .avatar-wrapper { margin: 0 0 2rem 0; } /* 歸位後靠左 */
 
 .main-title { font-family: 'Outfit', sans-serif; font-size: 3rem; font-weight: 900; }
-.text-gradient { background: linear-gradient(135deg, var(--accent-1), var(--accent-3)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.text-gradient {background: linear-gradient(135deg, var(--accent-1), var(--accent-3)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; display: inline-block; }
 .badge { font-size: 0.75rem; letter-spacing: 2px; color: var(--accent-1); margin-bottom: 0.5rem; text-transform: uppercase; }
 
 /* --- 右側網格 --- */
@@ -96,69 +97,63 @@ body {
 }
 
 /* =========================================
-   Witt3c 專屬：數位掃描轉場效果
-   (不更動原有排版，僅加入掃描靈魂)
+   Witt3c 專屬：數位掃描轉場效果 (修復版)
    ========================================= */
 
-/* --- A. 定義掃描遮罩 (Scanning Mask) --- */
+/* --- 1. 修正 3C 消失的問題：給漸層文字獨立的顯示邏輯 --- */
+.text-gradient {
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
+    -webkit-background-clip: text;
+    background-clip: text; /* 確保標準屬性也在 */
+    -webkit-text-fill-color: transparent;
+    display: inline-block; /* 加上這個可以穩定漸層顯示 */
+}
+
+/* --- 2. 修正掃描動畫 (scanMask)：改用更穩定的 opacity 漸變 --- */
 @keyframes scanMask {
     0% {
-        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 0%);
-        mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 0%);
+        opacity: 0;
+        clip-path: inset(0 0 100% 0); /* 從頭頂往下掃描，初始隱藏 */
     }
     100% {
-        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 100%, rgba(0,0,0,0) 100%);
-        mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 100%, rgba(0,0,0,0) 100%);
+        opacity: 1;
+        clip-path: inset(0 0 0 0); /* 全開 */
     }
 }
 
-/* --- B. 定義粒子消失 (Dissolve) --- */
+/* --- 3. 修正溶解動畫 (dissolveOut) --- */
 @keyframes dissolveOut {
     0% {
         opacity: 1;
-        filter: blur(0px) brightness(1);
-        transform: translate3d(-50%, -50%, 0) scale(1.3);
+        filter: blur(0px);
     }
     100% {
         opacity: 0;
-        filter: blur(20px) brightness(2); /* 掃描時發光並模糊 */
-        transform: translate3d(-50%, -50%, 0) scale(1.1); /* 輕微縮小 */
+        filter: blur(15px);
+        transform: translate(-50%, -50%) scale(1.1);
     }
 }
 
-/* --- C. 應用動畫到初始狀態 (中央 Logo) --- */
-.sidebar.initial-center {
-    /* 移除原本的 cubic-bezier 移動，改用純消失動畫 */
-    transition: none !important; 
+/* 初始狀態：確保頭貼與內容是存在的 */
+.avatar-wrapper {
+    background: #1a1a1a; /* 給個深色底防止圖片載入前的空白 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* 當 JS 觸發開場，中央 Logo 開始「溶解消失」 */
-.sidebar.initial-center.run-dissolve {
-    animation: dissolveOut 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* --- D. 應用動畫到歸位狀態 (左側 Sidebar) --- */
-.sidebar.active-left {
-    /* 初始隱藏，準備被掃描 */
-    opacity: 0; 
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 0%);
-    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 0%);
-}
-
-/* 當 JS 觸發歸位，左側欄開始「掃描顯現」 */
+/* 應用動畫到歸位後的左側 Sidebar */
 .sidebar.active-left.run-scan {
-    opacity: 1;
-    /* 這裡加上一個發光條效果，更像影印機 */
-    box-shadow: 
-        0 0 30px rgba(99, 102, 241, 0.1), /* 品牌色柔光 */
-        inset 0 0 15px rgba(255, 255, 255, 0.05); /* 內部微光 */
-        
-    animation: scanMask 2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-    /* 動畫時間稍長，營造緩慢、高級的感覺 */
+    animation: scanMask 1.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+    /* 移除掉之前可能導致 3C 文字消失的 mask-image，改用更穩定的 clip-path */
+    -webkit-mask-image: none !important; 
+    mask-image: none !important;
 }
 
-/* --- E. 自我介紹文字的同步浮現 --- */
-.bio-details.run-scan-text {
-    opacity: 1;
-    transition: opacity 1s ease 1s; /* 在掃描過半後緩慢浮現 */
+/* 修正頭貼圖片，確保它填滿容器 */
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block; /* 防止下方出現空隙 */
 }
