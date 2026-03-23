@@ -157,3 +157,33 @@ body {
     object-fit: cover;
     display: block; /* 防止下方出現空隙 */
 }
+
+/* 自我介紹引言 */
+.bio-quote {
+    font-style: italic;
+    color: var(--accent-1);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    border-left: 2px solid var(--accent-1);
+    padding-left: 10px;
+}
+
+/* 自我介紹主內文 */
+.bio-description {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    text-align: justify; /* 左右對齊讓畫面更乾淨 */
+}
+
+/* 強化列表的專業感 */
+.bio-list li {
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+    color: var(--text-primary);
+}
+
+.bio-list li strong {
+    color: var(--accent-3); /* 將重點標為紫色，增加視覺點擊感 */
+}
