@@ -561,6 +561,24 @@ footer {
     color: #ff3e3e;
 }
 
+/* 活體系統指示燈 */
+.status-dot {
+    height: 8px;
+    width: 8px;
+    background-color: #00ff00;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+    box-shadow: 0 0 8px #00ff00;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
 
 
 @keyframes pulse {
@@ -1125,4 +1143,17 @@ footer {
     color: #000;
     box-shadow: 0 0 20px var(--accent-1, #00d4ff);
     transform: translateY(-5px);
+}
+
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+.error-code {
+    animation: glitch 0.3s infinite alternate-reverse;
 }

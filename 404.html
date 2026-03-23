@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系統錯誤 404 | 維特空間站</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Outfit:wght@700&display=swap" rel="stylesheet">
+    <style>
+        .error-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
+            color: #fff;
+        }
+        .error-code {
+            font-size: 120px;
+            font-family: 'Outfit', sans-serif;
+            color: var(--accent-1, #00d4ff);
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            margin: 0;
+            line-height: 1;
+        }
+        .error-msg {
+            font-size: 1.5rem;
+            margin: 20px 0;
+            opacity: 0.8;
+        }
+        .terminal-box {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            color: #00ff00; /* 經典終端機綠 */
+            margin-bottom: 30px;
+            max-width: 400px;
+            text-align: left;
+        }
+        .btn-home {
+            padding: 12px 30px;
+            background: transparent;
+            border: 1px solid var(--accent-1, #00d4ff);
+            color: var(--accent-1, #00d4ff);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .btn-home:hover {
+            background: var(--accent-1, #00d4ff);
+            color: #000;
+            box-shadow: 0 0 15px var(--accent-1, #00d4ff);
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1 class="error-code">404</h1>
+        <div class="terminal-box">
+            <div>> ERROR: PAGE_NOT_FOUND</div>
+            <div>> STATUS: DISCONNECTED</div>
+            <div>> TRACE: [witt_bot_core_v2]</div>
+            <div>> 系統提示：你進入了未開發的虛空區域...</div>
+        </div>
+        <p class="error-msg">看來這條電路斷開了。</p>
+        <a href="index.html" class="btn-home">重啟系統 (返回首頁)</a>
+    </div>
+</body>
+</html>
