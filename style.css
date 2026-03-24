@@ -352,3 +352,102 @@ footer {
     font-size: 0.9rem;
     color: var(--text-secondary);
 }
+
+
+
+
+
+
+
+
+
+
+
+/* 監控大框格 */
+.monitor-dashboard {
+    grid-column: 1 / -1;
+    padding: 1.5rem;
+    background: var(--glass-bg);
+}
+
+.monitor-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    text-align: center;
+}
+
+.monitor-header {
+    font-size: 0.7rem;
+    font-weight: 900;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+/* 頭像外圈 */
+.monitor-avatar-wrapper {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 10px;
+    border-radius: 50%;
+    padding: 3px;
+    border: 1px solid var(--glass-border);
+    background: rgba(0,0,0,0.2);
+}
+
+.monitor-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* 狀態列佈局 */
+.monitor-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 0.8rem;
+}
+
+/* --- 🌟 跳動燈號動畫 --- */
+.status-led {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* 上線：綠燈跳動 */
+.led-online {
+    background: #2ecc71;
+    box-shadow: 0 0 8px #2ecc71;
+    animation: led-pulse-green 2s infinite;
+}
+
+/* 離線：灰燈靜止 */
+.led-offline {
+    background: #95a5a6;
+    box-shadow: none;
+}
+
+/* 定位：藍燈緩慢呼吸 */
+.led-location {
+    background: var(--accent-1);
+    box-shadow: 0 0 8px var(--accent-1);
+    animation: led-pulse-blue 3s infinite;
+}
+
+@keyframes led-pulse-green {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.2); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes led-pulse-blue {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(1.8); }
+    100% { filter: brightness(1); }
+}
