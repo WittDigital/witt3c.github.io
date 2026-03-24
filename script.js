@@ -45,43 +45,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 async function fetchAllWeather() {
-    console.log("📡 嘗試連接天氣感測器 (weather.json)...");
-    
-    // 🌟 關鍵修正：確保這裡的 ID 跟 HTML 一模一樣
+    const url = './weather.json'; 
     const container = document.getElementById('weather-mini-grid');
-    
-    // 加上這行保險：如果找不到容器，先在 Console 報警，不要讓後面的程式死掉
-    if (!container) {
-        console.error("❌ 找不到 ID 為 weather-mini-grid 的容器！請檢查 HTML。");
-        return;
-    }
+    if (!container) return;
+
+    // 🌟 定義你要顯示的縣市順序
+    const targetCities = ['臺北市', '桃園市', '臺中市', '嘉義市', '臺南市', '高雄市', '臺東縣', '花蓮縣'];
 
     try {
-        const response = await fetch('./weather.json');
+        const response = await fetch(url);
         const data = await response.json();
-        
-        // 氣象署的資料路徑非常深，我們要準確導航
-        const locations = data.records.location;
-        container.innerHTML = ''; // 清除 loading 文字
+        const allLocations = data.records.location;
 
-        locations.forEach(loc => {
-            const cityName = loc.locationName;
-            // 這裡要注意：氣象署的 API 結構有時候會變動
-            // 我們先抓取出第一筆天氣現象與平均溫度
-            const weatherDesc = loc.weatherElement[0].time[0].parameter.parameterName;
-            const temp = loc.weatherElement[2].time[0].parameter.parameterName;
+        container.innerHTML = ''; 
 
-            const div = document.createElement('div');
-            div.className = 'mini-weather-item';
-            div.innerHTML = `
-                <span class="mini-city-name">${cityName}</span>
-                <span class="mini-city-temp">${temp}°C</span>
-                <i class="fas fa-sun mini-city-icon"></i> 
-            `;
-            container.appendChild(div);
+        // 依照我們定義的 targetCities 順序來渲染
+        targetCities.forEach(target => {
+            const loc = allLocations.find(l => l.locationName === target);
+            if (loc) {
+                const cityName = loc.locationName;
+                const weatherDesc = loc.weatherElement[0].time[0].parameter.parameterName;
+                const temp = loc.weatherElement[2].time[0].parameter.parameterName;
+                
+                let iconClass = 'fa-sun';
+                if (weatherDesc.includes('雨')) iconClass = 'fa-cloud-showers-heavy';
+                else if (weatherDesc.includes('雲')) iconClass = 'fa-cloud-sun';
+
+                const div = document.createElement('div');
+                div.className = 'mini-weather-item';
+                div.innerHTML = `
+                    <span class="mini-city-name">${cityName}</span>
+                    <span class="mini-city-temp">${temp}°C</span>
+                    <i class="fas ${iconClass} mini-city-icon"></i>
+                `;
+                container.appendChild(div);
+            }
         });
-        console.log("✅ 全台數據面板點亮！");
     } catch (e) {
-        console.error('❌ 渲染失敗:', e.message);
+        console.error('天氣更新失敗', e);
     }
 }
