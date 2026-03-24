@@ -1,0 +1,24 @@
+name: Update Weather Data
+on:
+  schedule:
+    - cron: '0 */3 * * *' # 每 3 小時自動跑一次
+  workflow_dispatch:      # 也可以手動觸發
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Fetch Weather API
+        run: |
+          curl "https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=${{ secrets.CWA-D54F73C4-001F-4F3B-88D9-BAA24CB1DD47 }}" > weather.json
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "Weather Bot"
+          git config --global user.email "bot@github.com"
+          git add weather.json
+          git commit -m "Update weather data" || exit 0
+          git push

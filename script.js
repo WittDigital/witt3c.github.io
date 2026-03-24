@@ -42,18 +42,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 async function fetchAllWeather() {
-    const API_KEY = 'CWA-D54F73C4-001F-4F3B-88D9-BAA24CB1DD47';
-    const targetUrl = `https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=${API_KEY}`;
-    
-    // 🌟 使用 allOrigins 代理伺服器
-    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
+    // 🌟 現在直接讀取你 GitHub 倉庫裡的檔案
+    const url = './weather.json'; 
 
     try {
-        const response = await fetch(proxyUrl);
-        const json = await response.json();
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('找不到天氣資料檔');
         
-        // 注意：allOrigins 會把原始資料放在 json.contents 裡面，且是字串格式
-        const data = JSON.parse(json.contents);
+        const data = await response.json();
         const locations = data.records.location;
 
         const container = document.getElementById('weather-grid-container');
@@ -82,7 +78,7 @@ async function fetchAllWeather() {
             container.appendChild(card);
         });
     } catch (error) {
-        console.error('全台天氣讀取失敗', error);
-        document.getElementById('weather-grid-container').innerHTML = '設備連線中斷，請稍後再試。';
+        console.error('天氣讀取失敗', error);
+        document.getElementById('weather-grid-container').innerHTML = '天氣模組維護中...';
     }
 }
