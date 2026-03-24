@@ -22,10 +22,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     grid.classList.remove('contents-hidden');
                     grid.classList.add('contents-show');
 
-                    // 🌟 統一在這裡觸發所有串接任務
+                    // 🌟 統一在此觸發所有數據串接
                     fetchAllWeather();
                     fetchSteamStatus();
-                    updateDiscordStatus(); // 呼叫偵測函式
+                    updateDiscordStatus(); 
+                    updateLiveLocation(); // 📍 新增位置感測啟動
                 }, 800); 
                 
             }, 1000);
@@ -39,12 +40,55 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(startPortalAnimation, 4000);
     }
 
-    // 設定定時刷新 (每 5 分鐘)
+    // 設定定時刷新任務
     setInterval(() => {
         fetchSteamStatus();
         updateDiscordStatus();
+        updateLiveLocation(); // 每 5 分鐘同步位置 (與 Discord 同步頻率)
     }, 300000);
 });
+
+// --- 📍 OwnTracks 全自動位置感測 ---
+async function updateLiveLocation() {
+    const statusText = document.querySelector('#geo-status .status-text');
+    const led = document.querySelector('#geo-status .status-led');
+    
+    // ⚠️ 請記得更換成你的 Cloudflare Worker 網址
+    const workerUrl = 'https://你的Worker名稱.workers.dev'; 
+
+    // 初始化狀態
+    if (statusText) statusText.innerHTML = '衛星掃描中<span class="loading-dots"></span>';
+
+    try {
+        const response = await fetch(workerUrl);
+        const data = await response.json();
+        
+        if (statusText && data.name) {
+            // 格式化時間 (只取 時:分)
+            const updateTime = data.time.split(' ')[1] || "";
+            
+            statusText.innerHTML = `
+                ${data.name} 
+                <div style="font-size: 0.65rem; opacity: 0.4; margin-top: 2px;">
+                    Updated: ${updateTime}
+                </div>
+            `;
+            
+            // LED 狀態控制 (符合硬派工程感)
+            if (led) {
+                led.style.backgroundColor = '#00ff00'; 
+                led.style.boxShadow = '0 0 8px #00ff00';
+            }
+        }
+    } catch (error) {
+        console.error("定位更新失敗:", error);
+        if (statusText) statusText.innerText = "衛星訊號中斷";
+        if (led) {
+            led.style.backgroundColor = '#ff0000'; 
+            led.style.boxShadow = '0 0 8px #ff0000';
+        }
+    }
+}
 
 // --- 氣象串接 ---
 async function fetchAllWeather() {
@@ -106,7 +150,7 @@ async function fetchSteamStatus() {
     } catch (e) { console.log("Steam 讀取中..."); }
 }
 
-// --- Discord 偵測 (導入你的 2.5s 儀式感邏輯) ---
+// --- Discord 偵測 ---
 async function updateDiscordStatus() {
     const SERVER_ID = "1330733636219043961";
     const TARGET_NAME = "小維"; 
@@ -123,7 +167,7 @@ async function updateDiscordStatus() {
     try {
         const [response] = await Promise.all([
             fetch(`https://discord.com/api/guilds/${SERVER_ID}/widget.json?t=${Date.now()}`),
-            new Promise(resolve => setTimeout(resolve, 2500))
+            new Promise(resolve => setTimeout(resolve, 2500)) // 保持 2.5s 儀式感
         ]);
 
         const data = await response.json();
@@ -142,50 +186,3 @@ async function updateDiscordStatus() {
         led.className = 'status-led led-offline';
     }
 }
-
-// --- 📍 OwnTracks 全自動位置感測 ---
-async function updateLiveLocation() {
-    // 1. 定位到你原本 HTML 中的文字顯示區塊
-    const statusText = document.querySelector('#geo-status .status-text');
-    const led = document.querySelector('#geo-status .status-led');
-    
-    // 2. 你的 Cloudflare Worker 網址
-    const workerUrl = 'https://你的Worker名稱.workers.dev'; 
-
-    try {
-        const response = await fetch(workerUrl);
-        const data = await response.json();
-        
-        if (statusText && data.name) {
-            // 3. 更新內容：上方顯示地點，下方顯示小字時間
-            // 使用 innerHTML 來插入換行和縮小時間文字
-            statusText.innerHTML = `
-                ${data.name} 
-                <div style="font-size: 0.65rem; opacity: 0.4; margin-top: 2px;">
-                    Updated: ${data.time.split(' ')[1]} // 只取時間部分
-                </div>
-            `;
-            
-            // 4. 讓 LED 燈亮起（代表通訊正常）
-            if (led) {
-                led.style.backgroundColor = '#00ff00'; // 綠燈
-                led.style.boxShadow = '0 0 5px #00ff00';
-            }
-        }
-    } catch (error) {
-        console.error("定位更新失敗:", error);
-        if (statusText) statusText.innerText = "衛星訊號中斷";
-        if (led) {
-            led.style.backgroundColor = '#ff0000'; // 紅燈
-            led.style.boxShadow = '0 0 5px #ff0000';
-        }
-    }
-}
-
-// 網頁載入後執行
-document.addEventListener('DOMContentLoaded', () => {
-    updateLiveLocation();
-    
-    // 每 10 分鐘自動對時一次
-    setInterval(updateLiveLocation, 600000);
-});
