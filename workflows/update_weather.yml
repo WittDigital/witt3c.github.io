@@ -1,24 +1,30 @@
-name: Update Weather Data
+name: 自動更新全台天氣資料
+
 on:
   schedule:
-    - cron: '0 */3 * * *' # 每 3 小時自動跑一次
-  workflow_dispatch:      # 也可以手動觸發
+    - cron: '0 */3 * * *'  # 每 3 小時執行一次 (國際標準時間)
+  workflow_dispatch:       # 允許你手動點擊按鈕立即更新
 
 jobs:
-  build:
+  update-data:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write      # 給予機器人寫入檔案的權限
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: 檢出代碼
+        uses: actions/checkout@v4
 
-      - name: Fetch Weather API
+      - name: 向氣象署索取資料
         run: |
-          curl "https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=${{ secrets.CWA-D54F73C4-001F-4F3B-88D9-BAA24CB1DD47 }}" > weather.json
+          # 這裡使用 curl 直接抓取全台 36 小時天氣預報
+          curl -X GET "https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=${{ secrets.CWA_API_KEY }}" -H "accept: application/json" > weather.json
 
-      - name: Commit and Push
+      - name: 檢查並更新檔案
         run: |
-          git config --global user.name "Weather Bot"
-          git config --global user.email "bot@github.com"
+          git config --global user.name "Witt-Weather-Bot"
+          git config --global user.email "action@github.com"
           git add weather.json
-          git commit -m "Update weather data" || exit 0
+          # 如果資料沒變就不動作，有變才 commit
+          git commit -m "🤖 自動更新天氣數據: $(date)" || exit 0
           git push
