@@ -24,13 +24,13 @@ html, body {
 .main-layout {
     display: flex;
     width: 100vw;
-    height: 100vh; /* 鎖定為視窗高度 */
+    height: 100vh;
     padding: 3rem;
     gap: 3rem;
     max-width: 100%;
     margin: 0 ;
     box-sizing: border-box;
-    align-items: center; /* 讓左右兩區塊垂直置中 */
+    align-items: stretch; 
     justify-content: flex-start;
 }
 
@@ -45,9 +45,9 @@ html, body {
     flex-grow: 1;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-    grid-template-rows: repeat(auto-fill, minmax(180px, 1fr)); /* 讓列高也能自動分配 */
+    grid-auto-rows: 1fr;
     gap: 1.5rem;
-    max-height: 85vh;
+    max-height: 100%;
     overflow-y: auto; /* 萬一卡片太多，只在網格區滾動 */
     padding-right: 10px; /* 給滾動條預留空間 */
     align-content: start;
@@ -112,8 +112,8 @@ footer {
     height: fit-content;
     transform: none !important; 
     width: 420px;
-    max-height: 95vh;
-    height: auto;
+    max-height: 100%;
+    height: 100%;
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     border-radius: 32px;
@@ -121,7 +121,7 @@ footer {
     overflow: hidden;
     /* 核心修復：強制立即橫向排列，防止跳動 */
     display: flex !important;
-    flex-direction: row !important; 
+    flex-direction: column !important;
     flex-wrap: wrap; 
     align-items: center !important;
     justify-content: flex-start !important; /* 確保內容從左開始 */
@@ -254,7 +254,15 @@ footer {
 .contact-card:hover { transform: translateY(-3px); }
 .contact-card:hover i { color: var(--text-primary); filter: drop-shadow(0 0 8px var(--accent-1)); }
 .contact-card:hover span { color: var(--text-primary); }
-.weather-dashboard-card { padding: 1.5rem; background: var(--glass-bg); }
+
+.weather-dashboard-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 垂直置中 */
+    height: 100%;
+    padding: 1.5rem;
+    background: var(--glass-bg);
+}
 .weather-mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; }
 .mini-weather-item { display: flex; align-items: center; justify-content: flex-start; gap: 10px; padding: 4px 0; }
 .mini-city-name { font-size: 0.9rem; color: var(--text-primary); min-width: 50px; }
