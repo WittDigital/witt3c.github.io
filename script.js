@@ -64,13 +64,22 @@ async function updateLiveLocation() {
         const data = await response.json();
         
         if (statusText && data.name) {
-            // 格式化時間 (只取 時:分)
-            const updateTime = data.time.split(' ')[1] || "";
+            const now = new Date(data.time); 
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const dd = String(now.getDate()).padStart(2, '0');
             
+            let hours = now.getHours();
+            const ampm = hours >= 12 ? '下午' : '上午';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // 小時為 0 時顯示為 12
+            
+            const formattedTime = `${mm}/${dd} ${ampm} ${hours} 點`;
+
+            // 更新內容
             statusText.innerHTML = `
                 ${data.name} 
                 <div style="font-size: 0.65rem; opacity: 0.4; margin-top: 2px;">
-                    Updated: ${updateTime}
+                    更新時間 ${formattedTime}
                 </div>
             `;
             
@@ -80,6 +89,7 @@ async function updateLiveLocation() {
                 led.style.boxShadow = '0 0 8px #00ff00';
             }
         }
+
     } catch (error) {
         console.error("定位更新失敗:", error);
         if (statusText) statusText.innerText = "衛星訊號中斷";
