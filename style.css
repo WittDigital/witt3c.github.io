@@ -9,6 +9,74 @@ body {
     color: var(--text-primary);
     overflow-x: hidden;
     line-height: 1.6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- 1. 強制鎖定視窗高度，消除滾動條 --- */
+html, body {
+    height: 100%;
+    overflow: hidden; /* 徹底禁止全頁滾動 */
+}
+
+/* --- 2. 佈局核心：填滿視窗但不溢出 --- */
+.main-layout {
+    display: flex;
+    width: 100vw;
+    height: 100vh; /* 鎖定為視窗高度 */
+    padding: 3rem;
+    gap: 3rem;
+    max-width: 1600px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    align-items: center; /* 讓左右兩區塊垂直置中 */
+}
+
+/* --- 3. 側邊欄：固定寬度，內容過多時內部滾動 (保險機制) --- */
+.sidebar.active-left {
+    flex-shrink: 0; /* 禁止被擠壓 */
+    width: 420px;
+    max-height: 90vh; /* 稍微小於視窗高度 */
+    overflow-y: auto; /* 萬一內容太多，只在小框內滾動 */
+    padding: 2.5rem;
+    /* ... 其餘 background, border 等保持不變 ... */
+}
+
+/* 隱藏側邊欄內部的滾動條（美觀考量） */
+.sidebar.active-left::-webkit-scrollbar {
+    width: 0px;
+}
+
+/* --- 4. 右側網格：自動適應剩餘空間 --- */
+.portal-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    grid-template-rows: repeat(auto-fill, minmax(180px, 1fr)); /* 讓列高也能自動分配 */
+    gap: 1.5rem;
+    max-height: 90vh;
+    overflow-y: auto; /* 萬一卡片太多，只在網格區滾動 */
+    padding-right: 10px; /* 給滾動條預留空間 */
+}
+
+/* 自定義右側滾動條樣式 (讓他看起來像科技儀器的一部分) */
+.portal-grid::-webkit-scrollbar {
+    width: 4px;
+}
+.portal-grid::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 10px;
+}
+
+/* --- 5. 頁腳：固定在網格底部或是側邊欄底部 --- */
+footer {
+    grid-column: 1 / -1; /* 橫跨所有欄位 */
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--glass-border);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
 }
 
 /* --- 2. 背景氛圍 --- */
@@ -68,7 +136,7 @@ body {
     flex-wrap: wrap; 
     align-items: center;
     justify-content: flex-start; /* 確保內容從左開始 */
-    gap: 1.5rem;
+    gap: 0.9rem;
     
     backdrop-filter: blur(20px);
     
