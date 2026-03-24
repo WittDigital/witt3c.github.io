@@ -42,16 +42,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 async function fetchAllWeather() {
-    const API_KEY = 'CWA-D54F73C4-001F-4F3B-88D9-BAA24CB1DD47';
-    const url = `https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=${API_KEY}`;
+    const API_KEY = '你的API金鑰'; // 🚀 記得填入
+    const targetUrl = `https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=${API_KEY}`;
+    
+    // 🌟 使用 allOrigins 代理伺服器
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
 
     try {
-        const response = await fetch(url);
-        const data = await response.json();
-        const locations = data.records.location; // 這裡包含全台縣市資料
+        const response = await fetch(proxyUrl);
+        const json = await response.json();
+        
+        // 注意：allOrigins 會把原始資料放在 json.contents 裡面，且是字串格式
+        const data = JSON.parse(json.contents);
+        const locations = data.records.location;
 
         const container = document.getElementById('weather-grid-container');
-        container.innerHTML = ''; // 清除 Loading 文字
+        container.innerHTML = ''; 
 
         locations.forEach(loc => {
             const cityName = loc.locationName;
@@ -59,12 +65,10 @@ async function fetchAllWeather() {
             const minTemp = loc.weatherElement[2].time[0].parameter.parameterName;
             const maxTemp = loc.weatherElement[4].time[0].parameter.parameterName;
             
-            // 決定圖標邏輯
             let iconClass = 'fas fa-sun';
             if (weatherDesc.includes('雨')) iconClass = 'fas fa-cloud-showers-heavy';
             else if (weatherDesc.includes('雲')) iconClass = 'fas fa-cloud-sun';
 
-            // 產生 HTML 結構
             const card = document.createElement('div');
             card.className = 'portal-card weather-item';
             card.innerHTML = `
@@ -79,9 +83,6 @@ async function fetchAllWeather() {
         });
     } catch (error) {
         console.error('全台天氣讀取失敗', error);
-        document.getElementById('weather-grid-container').innerHTML = '設備連線中斷，請檢查網路。';
+        document.getElementById('weather-grid-container').innerHTML = '設備連線中斷，請稍後再試。';
     }
 }
-
-// 啟動全台天氣監測
-fetchAllWeather();
