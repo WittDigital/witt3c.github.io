@@ -244,111 +244,113 @@ footer {
 
 
 
-/* 圖示初始狀態：暗灰色 */
-.contact-card i {
-    font-size: 1.4rem;
-    color: #666666; /* 平時較暗 */
-    margin-bottom: 6px;
-    transition: color 0.3s ease, filter 0.3s ease;
-}
-
-/* 文字初始狀態：暗灰色 */
-.contact-card span {
-    font-size: 0.65rem;
-    color: #666666; /* 平時較暗 */
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    transition: color 0.3s ease;
-}
-
-
-/* --- 聯絡區塊：無邊框發光設計 --- */
-.contact-stack {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--glass-border);
-}
-
-.contact-stack small {
-    color: var(--accent-1);
-    display: block;
-    margin-bottom: 1.2rem;
-    font-weight: 700;
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
-
-.contact-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 調整為 4 列排列更緊湊 */
-    gap: 20px 10px; /* 上下間距大一點，左右小一點 */
-}
-
-.contact-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    background: transparent; /* 移除背景 */
-    border: none;            /* 移除邊框 */
-    padding: 5px;
-    transition: transform 0.3s ease;
-}
-
-/* --- 滑鼠懸停：僅圖標與文字點亮 --- */
-.contact-card:hover {
-    transform: translateY(-3px); /* 輕微浮動 */
-}
-
-.contact-card:hover i {
-    color: var(--text-primary); /* 變純白 */
-    /* 增加微弱的光暈效果 */
-    filter: drop-shadow(0 0 8px var(--accent-1)); 
-}
-
-.contact-card:hover span {
-    color: var(--text-primary); /* 文字變純白 */
-}
+/* 天氣卡片css設定------------------------------------------------------------------------------------------ */
+.contact-card i { font-size: 1.4rem; color: #666666; margin-bottom: 6px; transition: color 0.3s ease, filter 0.3s ease; }
+.contact-card span { font-size: 0.65rem; color: #666666; font-weight: 500; letter-spacing: 0.5px; transition: color 0.3s ease; }
+.contact-stack { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--glass-border); }
+.contact-stack small { color: var(--accent-1); display: block; margin-bottom: 1.2rem; font-weight: 700; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; }
+.contact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px 10px; }
+.contact-card { display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; background: transparent; border: none; padding: 5px; transition: transform 0.3s ease; }
+.contact-card:hover { transform: translateY(-3px); }
+.contact-card:hover i { color: var(--text-primary); filter: drop-shadow(0 0 8px var(--accent-1)); }
+.contact-card:hover span { color: var(--text-primary); }
+.weather-dashboard-card { padding: 1.5rem; background: var(--glass-bg); }
+.weather-mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; }
+.mini-weather-item { display: flex; align-items: center; justify-content: flex-start; gap: 10px; padding: 4px 0; }
+.mini-city-name { font-size: 0.9rem; color: var(--text-primary); min-width: 50px; }
+.mini-city-temp { font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700; color: var(--accent-1); }
+.mini-city-icon { font-size: 0.9rem; color: var(--text-secondary); }
 
 
 
 
 
-.weather-dashboard-card {
-    padding: 1.5rem; /* 稍微縮小內距讓它更緊湊 */
+
+/* 監控大框格 */
+.monitor-dashboard {
+    grid-column: 1 / -1;
+    padding: 1.5rem;
     background: var(--glass-bg);
 }
 
-.weather-mini-grid {
+.monitor-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* 強制雙欄 */
-    gap: 12px 20px; /* 上下 12px，左右 20px */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    text-align: center;
 }
 
-.mini-weather-item {
+.monitor-header {
+    font-size: 0.7rem;
+    font-weight: 900;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+/* 頭像外圈 */
+.monitor-avatar-wrapper {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 10px;
+    border-radius: 50%;
+    padding: 3px;
+    border: 1px solid var(--glass-border);
+    background: rgba(0,0,0,0.2);
+}
+
+.monitor-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* 狀態列佈局 */
+.monitor-info {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* 靠左對齊 */
-    gap: 10px;
-    padding: 4px 0;
+    justify-content: center;
+    gap: 6px;
+    font-size: 0.8rem;
 }
 
-.mini-city-name {
-    font-size: 0.9rem;
-    color: var(--text-primary);
-    min-width: 50px; /* 確保縣市名稱寬度一致，對齊比較好看 */
+/* --- 🌟 跳動燈號動畫 --- */
+.status-led {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
 }
 
-.mini-city-temp {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--accent-1);
+/* 上線：綠燈跳動 */
+.led-online {
+    background: #2ecc71;
+    box-shadow: 0 0 8px #2ecc71;
+    animation: led-pulse-green 2s infinite;
 }
 
-.mini-city-icon {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
+/* 離線：灰燈靜止 */
+.led-offline {
+    background: #95a5a6;
+    box-shadow: none;
+}
+
+/* 定位：藍燈緩慢呼吸 */
+.led-location {
+    background: var(--accent-1);
+    box-shadow: 0 0 8px var(--accent-1);
+    animation: led-pulse-blue 3s infinite;
+}
+
+@keyframes led-pulse-green {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.2); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes led-pulse-blue {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(1.8); }
+    100% { filter: brightness(1); }
 }
