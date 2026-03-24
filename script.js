@@ -134,3 +134,43 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(fetchSteamStatus, 30000); 
 });
 
+async function fetchDiscordStatus() {
+    const SERVER_ID = "1330733636219043961";
+    const TARGET_NAME = "小維"; // 換成你的名字
+    
+    const container = document.getElementById("discord-status");
+    const statusLed = container.querySelector(".status-led");
+    const statusText = container.querySelector(".status-text");
+    const avatarImg = document.getElementById("discord-avatar");
+
+    // 1. 進入偵測狀態 (你的招牌動作)
+    statusLed.className = 'status-led'; // 移除顏色
+    statusText.innerHTML = '偵測中<span class="loading-dots"></span>';
+
+    try {
+        // 2. 使用你的 2.5 秒人工延遲 + API 抓取
+        const [response] = await Promise.all([
+            fetch(`https://discord.com/api/guilds/${SERVER_ID}/widget.json?t=${Date.now()}`),
+            new Promise(resolve => setTimeout(resolve, 2500))
+        ]);
+
+        const data = await response.json();
+        const me = data.members.find(m => m.username === TARGET_NAME);
+
+        // 3. 判定完成
+        if (me && me.status === "online") {
+            statusLed.className = 'status-led led-online';
+            statusText.innerText = "目前在線";
+            // 順便更新頭像
+            if (avatarImg && me.avatar_url) avatarImg.src = me.avatar_url;
+        } else {
+            statusLed.className = 'status-led led-offline';
+            statusText.innerText = "目前離線";
+        }
+    } catch (error) {
+        console.error("Discord 偵測失敗:", error);
+        statusLed.className = 'status-led led-offline';
+        statusText.innerText = "連線受阻";
+    }
+}
+
