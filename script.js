@@ -47,18 +47,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function fetchAllWeather() {
     const url = './weather.json'; 
+    const container = document.getElementById('weather-grid-container');
 
     try {
+        console.log("開始抓取天氣資料...");
         const response = await fetch(url);
-        if (!response.ok) {
-            console.error('找不到 weather.json');
-            return;
-        }
+        if (!response.ok) throw new Error('找不到 weather.json');
+        
         const data = await response.json();
         const locations = data.records.location;
 
-        const container = document.getElementById('weather-grid-container');
-        // 🌟 只有抓到資料才清空 Loading 文字
+        // 清除 "感測器全台掃描中..."
         container.innerHTML = ''; 
 
         locations.forEach(loc => {
@@ -81,13 +80,11 @@ async function fetchAllWeather() {
                     <div class="city-temp">${minTemp}° ~ ${maxTemp}°C</div>
                 </div>
             `;
-            // 🌟 將產生的卡片塞入容器
             container.appendChild(card);
         });
-        
-        console.log('成功讀取並渲染天氣資料');
+        console.log("天氣渲染完成！");
     } catch (e) {
-        console.error('渲染失敗:', e);
-        document.querySelector('.weather-loading').innerText = '感測器離線';
+        console.error('失敗原因:', e);
+        container.innerHTML = `<div class="weather-error">線路查修中 (Error: ${e.message})</div>`;
     }
 }
