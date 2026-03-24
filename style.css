@@ -1,6 +1,6 @@
 /* --- 1. 基礎設定與變數 --- */
-:root { --bg-color: #050505; --text-primary: #ffffff; --text-secondary: #a0a0a0; --accent-1: #6366f1; --accent-2: #ec4899; --accent-3: #8b5cf6; --glass-bg: rgba(255, 255, 255, 0.03); --glass-border: rgba(255, 255, 255, 0.08); --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); }
-
+:root { 
+    --bg-color: #050505; --text-primary: #ffffff; --text-secondary: #cccccc; --accent-1: #818cf8; --accent-2: #ec4899; --accent-3: #8b5cf6; --glass-bg: rgba(255, 255, 255, 0.03); --glass-border: rgba(255, 255, 255, 0.08); --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
@@ -28,8 +28,14 @@ body {
     margin: 0 auto;
 }
 
+.sidebar {
+    opacity: 0; /* 預設完全隱藏 */
+    transition: opacity 0.5s ease;
+}
+
 /* --- 4. 側邊欄：初始中央狀態 --- */
 .sidebar.initial-center {
+    opacity: 1;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -44,6 +50,7 @@ body {
 
 /* --- 5. 側邊欄：歸位橫向狀態 (修復版) --- */
 .sidebar.active-left {
+    opacity: 1 !important;
     position: sticky !important;
     top: 3rem;
     left: 0;
@@ -173,23 +180,71 @@ body {
     font-weight: 700;
 }
 
-/* 工具箱樣式 */
+
+
+
+/* --- 聯絡卡片網格 (圖上文下) --- */
 .contact-stack {
     margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 1px dashed var(--glass-border);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--glass-border);
 }
 
 .contact-stack small {
-    color: var(--text-secondary);
+    color: var(--accent-1);
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
 }
 
-.contact-links {
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 三列等分 */
+    gap: 10px;
+}
+
+.contact-card {
     display: flex;
-    gap: 15px;
-    font-size: 0.8rem;
-    color: var(--text-primary);
-    opacity: 0.8;
+    flex-direction: column; /* 強制圖上文下 */
+    align-items: center;
+    justify-content: center;
+    padding: 15px 5px;
+    background: rgba(255, 255, 255, 0.05); /* 稍微加深背景 */
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 圖示樣式 */
+.contact-card i {
+    font-size: 1.5rem;
+    color: var(--text-secondary); /* 平時暗一點 */
+    margin-bottom: 8px;
+    transition: 0.3s ease;
+}
+
+/* 文字樣式 */
+.contact-card span {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* --- 滑鼠懸停效果：亮一點、整個都能按 --- */
+.contact-card:hover {
+    background: rgba(255, 255, 255, 0.12); /* 背景變亮 */
+    border-color: var(--accent-1);
+    transform: translateY(-5px); /* 向上微調 */
+}
+
+.contact-card:hover i {
+    color: var(--text-primary); /* 圖示變純白亮起 */
+    transform: scale(1.1);
+}
+
+.contact-card:hover span {
+    color: var(--text-primary); /* 文字變純白亮起 */
 }
