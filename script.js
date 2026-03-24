@@ -39,3 +39,49 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(startPortalAnimation, 4000); // 保險時間拉長一點
     }
 });
+
+
+async function fetchAllWeather() {
+    const API_KEY = '你的API金鑰'; // 🚀 記得填入
+    const url = `https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=${API_KEY}`;
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const locations = data.records.location; // 這裡包含全台縣市資料
+
+        const container = document.getElementById('weather-grid-container');
+        container.innerHTML = ''; // 清除 Loading 文字
+
+        locations.forEach(loc => {
+            const cityName = loc.locationName;
+            const weatherDesc = loc.weatherElement[0].time[0].parameter.parameterName;
+            const minTemp = loc.weatherElement[2].time[0].parameter.parameterName;
+            const maxTemp = loc.weatherElement[4].time[0].parameter.parameterName;
+            
+            // 決定圖標邏輯
+            let iconClass = 'fas fa-sun';
+            if (weatherDesc.includes('雨')) iconClass = 'fas fa-cloud-showers-heavy';
+            else if (weatherDesc.includes('雲')) iconClass = 'fas fa-cloud-sun';
+
+            // 產生 HTML 結構
+            const card = document.createElement('div');
+            card.className = 'portal-card weather-item';
+            card.innerHTML = `
+                <i class="${iconClass}"></i>
+                <div class="weather-info">
+                    <div class="city-name">${cityName}</div>
+                    <div class="city-desc">${weatherDesc}</div>
+                    <div class="city-temp">${minTemp}° ~ ${maxTemp}°C</div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    } catch (error) {
+        console.error('全台天氣讀取失敗', error);
+        document.getElementById('weather-grid-container').innerHTML = '設備連線中斷，請檢查網路。';
+    }
+}
+
+// 啟動全台天氣監測
+fetchAllWeather();

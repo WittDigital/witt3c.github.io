@@ -311,3 +311,46 @@ footer {
 .contact-card:hover span {
     color: var(--text-primary); /* 文字變純白 */
 }
+
+
+
+
+
+/* 微型天氣卡片 */
+.weather-item {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: 0.3s ease;
+}
+
+.weather-item:hover {
+    border-color: var(--accent-1);
+    background: rgba(129, 140, 248, 0.05);
+}
+
+.weather-item i {
+    font-size: 1.8rem; /* 縮小一點 */
+    color: var(--accent-1);
+}
+
+.weather-item .city-name {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.weather-item .city-temp {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+}
+
+.weather-item .city-desc {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
