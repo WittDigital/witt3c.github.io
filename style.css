@@ -44,8 +44,8 @@ html, body {
 .portal-grid {
     flex-grow: 1;
     display: grid;
-    grid-template-columns: 1fr 1fr; 
-    grid-auto-rows: min-content;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+    grid-auto-rows: 1fr;
     gap: 1.5rem;
     max-height: 100%;
     overflow-y: auto; /* 萬一卡片太多，只在網格區滾動 */
