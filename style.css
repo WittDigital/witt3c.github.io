@@ -109,15 +109,16 @@ footer {
     position: sticky !important;
     top: 3rem;
     left: 0;
+    height: fit-content;
     transform: none !important; 
     width: 420px;
-    max-height: 90vh;
+    max-height: 95vh;
     height: auto;
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     border-radius: 32px;
     padding: 1.5rem;
-    overflow-y: auto;
+    overflow: hidden;
     /* 核心修復：強制立即橫向排列，防止跳動 */
     display: flex !important;
     flex-direction: row !important; 
@@ -126,7 +127,7 @@ footer {
     justify-content: flex-start !important; /* 確保內容從左開始 */
     gap: 0.9rem;    
     backdrop-filter: blur(20px);
-    transition: opacity 0.3s ease, transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
 }
 
 .sidebar.active-left .intro-content {
@@ -174,11 +175,14 @@ footer {
 .bio-details {
     width: 100%;
     margin-top: 1rem;
-    display: none; /* 預設完全不顯示，不佔空間 */
+    display: none;
     opacity: 0;
+    text-align: left !important;
+    overflow: hidden;
+}
 }
 .bio-quote { font-style: italic; color: var(--accent-1); font-size: 0.9rem; margin-bottom: 1rem; border-left: 2px solid var(--accent-1); padding-left: 10px; }
-.bio-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.5rem; }
+.bio-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.5rem; text-align: left !important;}
 .bio-list { list-style: none; padding-top: 1rem; border-top: 1px solid var(--glass-border); }
 .bio-list li { margin-bottom: 0.8rem; color: var(--text-primary); font-size: 0.9rem; }
 
