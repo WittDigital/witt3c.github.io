@@ -44,23 +44,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
 async function fetchAllWeather() {
-    const url = './weather.json'; 
+    console.log("📡 嘗試連接天氣感測器 (weather.json)...");
     const container = document.getElementById('weather-grid-container');
 
     try {
-        console.log("開始抓取天氣資料...");
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('找不到 weather.json');
+        const response = await fetch('./weather.json');
+        console.log("📡 伺服器回應狀態:", response.status);
+
+        if (!response.ok) throw new Error(`找不到檔案 (Status: ${response.status})`);
         
         const data = await response.json();
-        const locations = data.records.location;
+        console.log("📦 接收到數據:", data);
 
-        // 清除 "感測器全台掃描中..."
+        const locations = data.records.location;
         container.innerHTML = ''; 
 
         locations.forEach(loc => {
+            console.log(`📍 正在繪製縣市: ${loc.locationName}`);
             const cityName = loc.locationName;
             const weatherDesc = loc.weatherElement[0].time[0].parameter.parameterName;
             const minTemp = loc.weatherElement[2].time[0].parameter.parameterName;
@@ -82,9 +83,9 @@ async function fetchAllWeather() {
             `;
             container.appendChild(card);
         });
-        console.log("天氣渲染完成！");
+        console.log("✅ 天氣卡片全數點亮！");
     } catch (e) {
-        console.error('失敗原因:', e);
-        container.innerHTML = `<div class="weather-error">線路查修中 (Error: ${e.message})</div>`;
+        console.error('❌ 斷路原因:', e.message);
+        container.innerHTML = `<div style="color: #ff4d4d; padding: 20px;">⚠️ 天氣模組連線失敗: ${e.message}</div>`;
     }
 }
