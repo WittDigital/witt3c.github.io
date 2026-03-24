@@ -44,18 +44,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 async function fetchAllWeather() {
-    const url = './weather.json'; // 🌟 確保這行路徑正確
+    const url = './weather.json'; 
 
     try {
         const response = await fetch(url);
         if (!response.ok) {
-            console.error('找不到 weather.json，請確認檔案已上傳至 GitHub');
+            console.error('找不到 weather.json');
             return;
         }
         const data = await response.json();
-        // ... 後續的渲染邏輯 ...
-        console.log('成功讀取本地天氣資料:', data);
+        const locations = data.records.location;
+
+        const container = document.getElementById('weather-grid-container');
+        // 🌟 只有抓到資料才清空 Loading 文字
+        container.innerHTML = ''; 
+
+        locations.forEach(loc => {
+            const cityName = loc.locationName;
+            const weatherDesc = loc.weatherElement[0].time[0].parameter.parameterName;
+            const minTemp = loc.weatherElement[2].time[0].parameter.parameterName;
+            const maxTemp = loc.weatherElement[4].time[0].parameter.parameterName;
+            
+            let iconClass = 'fas fa-sun';
+            if (weatherDesc.includes('雨')) iconClass = 'fas fa-cloud-showers-heavy';
+            else if (weatherDesc.includes('雲')) iconClass = 'fas fa-cloud-sun';
+
+            const card = document.createElement('div');
+            card.className = 'portal-card weather-item';
+            card.innerHTML = `
+                <i class="${iconClass}"></i>
+                <div class="weather-info">
+                    <div class="city-name">${cityName}</div>
+                    <div class="city-desc">${weatherDesc}</div>
+                    <div class="city-temp">${minTemp}° ~ ${maxTemp}°C</div>
+                </div>
+            `;
+            // 🌟 將產生的卡片塞入容器
+            container.appendChild(card);
+        });
+        
+        console.log('成功讀取並渲染天氣資料');
     } catch (e) {
-        console.error('連線失敗:', e);
+        console.error('渲染失敗:', e);
+        document.querySelector('.weather-loading').innerText = '感測器離線';
     }
 }
