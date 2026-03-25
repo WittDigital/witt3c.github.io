@@ -52,28 +52,31 @@ document.addEventListener('DOMContentLoaded', () => {
 async function updateLiveLocation() {
     const statusText = document.querySelector('#geo-status .status-text');
     const led = document.querySelector('#geo-status .status-led');
-    
-    // ⚠️ 請記得更換成你的 Cloudflare Worker 網址
-    const workerUrl = 'https://delicate-silence-d26f.witt3c-event.workers.dev/'; 
-
-    // 初始化狀態
-    if (statusText) statusText.innerHTML = '衛星掃描中<span class="loading-dots"></span>';
+    const workerUrl = 'https://delicate-silence-d26f.witt3c-event.workers.dev'; 
 
     try {
         const response = await fetch(workerUrl);
         const data = await response.json();
         
         if (statusText && data.name) {
-            const now = new Date(data.time); 
-            const mm = String(now.getMonth() + 1).padStart(2, '0');
-            const dd = String(now.getDate()).padStart(2, '0');
-            
-            let hours = now.getHours();
-            const ampm = hours >= 12 ? '下午' : '上午';
-            hours = hours % 12;
-            hours = hours ? hours : 12; // 小時為 0 時顯示為 12
-            
-            const formattedTime = `${mm}/${dd} ${ampm} ${hours} 點`;
+            // --- 🔧 硬派字串拆解法 ---
+            // data.time 範例: "2026/3/24 下午11:02:36"
+            const parts = data.time.split(' '); // 拆成 ["2026/3/24", "下午11:02:36"]
+            const datePart = parts[0];          // "2026/3/24"
+            const timePart = parts[1];          // "下午11:02:36"
+
+            // 1. 處理 月/日 (補零)
+            const dateNodes = datePart.split('/'); // ["2026", "3", "24"]
+            const mm = dateNodes[1].padStart(2, '0');
+            const dd = dateNodes[2].padStart(2, '0');
+
+            // 2. 處理 下午/上午 與 小時
+            const ampm = timePart.substring(0, 2); // "下午" 或 "上午"
+            const fullTime = timePart.substring(2); // "11:02:36"
+            const hour = fullTime.split(':')[0];    // "11"
+
+            // 3. 組合最終格式：03/24 下午 11 點
+            const formattedTime = `${mm}/${dd} ${ampm} ${hour} 點`;
 
             // 更新內容
             statusText.innerHTML = `
@@ -83,19 +86,16 @@ async function updateLiveLocation() {
                 </div>
             `;
             
-            // LED 狀態控制 (符合硬派工程感)
             if (led) {
                 led.style.backgroundColor = '#00ff00'; 
                 led.style.boxShadow = '0 0 8px #00ff00';
             }
         }
-
     } catch (error) {
         console.error("定位更新失敗:", error);
         if (statusText) statusText.innerText = "衛星訊號中斷";
         if (led) {
             led.style.backgroundColor = '#ff0000'; 
-            led.style.boxShadow = '0 0 8px #ff0000';
         }
     }
 }
