@@ -103,9 +103,7 @@
 
         <main class="portal-grid contents-hidden" id="portal-grid">
 
-
-
-            <div class="portal-card monitor-dashboard">
+            <div class="portal-card monitor-dashboard card-size-2">
                 <div class="monitor-grid">
                     <div class="monitor-item" id="steam-status">
                         <div class="monitor-header"><i class="fab fa-steam"></i> STEAM</div>
@@ -138,8 +136,8 @@
                             <span class="status-led led-location"></span>
                             <span class="status-text">未成功定位</span>
                         </div>
-
                     </div>
+
                     <div class="monitor-item" id="step-status">
                         <div class="monitor-header"><i class="fas fa-shoe-prints"></i> 今日步數</div>
                         <div class="monitor-avatar-wrapper">
@@ -159,8 +157,7 @@
                                     <div class="battery-cap"></div>
                                     <div id="battery-fill" class="battery-level" style="height: 0%;"></div>
                                 </div>
-                                <i id="charging-bolt" class="fas fa-charging-station charging-icon"
-                                    style="display: none;"></i>
+                                <i id="charging-bolt" class="fas fa-charging-station charging-icon" style="display: none;"></i>
                             </div>
                         </div>
                         <div class="monitor-info">
@@ -168,11 +165,10 @@
                             <span class="status-text">載入中...</span>
                         </div>
                     </div>
-
                 </div>
             </div>
 
-            <div class="portal-card weather-dashboard-card">
+            <div class="portal-card weather-dashboard-card card-size-1">
                 <div id="weather-mini-grid" class="weather-mini-grid">
                     <div class="weather-loading">系統讀取中...</div>
                 </div>
@@ -180,46 +176,41 @@
 
 
             <div class="card-size-2">
-                <a href="wittdcbot/index.html" class="portal-card card-bot">
+                <a href="wittdcbot/index.html" class="portal-card card-bot" style="display: block; height: 100%;">
                     <span class="card-icon">🤖</span>
-                    <h3>維特 DC 助手</h3>
-                    <p>為社群量身打造的自動化管理系統，整合進階權限與互動功能。</p>
+                    <h3>三部落格介紹</h3>
+                    <p>維特數位生活、旅遊美食與水電知識頻道。</p>
                 </a>
             </div>
             <div class="card-size-1">
-                <a href="wittblogs/index.html" class="portal-card card-blog">
+                <a href="wittblogs/index.html" class="portal-card card-blog" style="display: block; height: 100%;">
                     <span class="card-icon">✍️</span>
-                    <h3>維特日誌</h3>
-                    <p>紀錄 3C 科技開箱、旅遊食記與專業水電知識的數位筆記本。</p>
-                </a>
-            </div>
-            <div class="card-size-2">
-                <a href="prcode/index.html" class="portal-card card-app">
-                    <span class="card-icon">📐</span>
-                    <h3>工程報價 App</h3>
-                    <p>React Native 驅動的行動工作站，支援材料算料與 PDF 自動生成。</p>
-                </a>
-            </div>
-            <div class="card-size-1">
-                <a href="prcode/index.html" class="portal-card card-app">
-                    <span class="card-icon">📐</span>
-                    <h3>工程報價 App</h3>
-                    <p>React Native 驅動的行動工作站，支援材料算料與 PDF 自動生成。</p>
+                    <h3>更新日誌</h3>
+                    <p>Studio 系統開發進度紀錄。</p>
                 </a>
             </div>
 
-            <footer>
-                <div class="footer-links">
-                    <a href="https://github.com/witt3c" target="_blank">GitHub</a>
-                    <a href="mailto:your-email@example.com">Contact</a>
+            <div class="card-size-2">
+                <a href="prcode/index.html" class="portal-card card-app" style="display: block; height: 100%;">
+                    <span class="card-icon">📐</span>
+                    <h3>最新發布文章</h3>
+                    <p>探索代碼與實務維修的技術筆記。</p>
+                </a>
+            </div>
+            
+            <div class="card-size-1">
+                <div class="portal-card footer-card" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                    <h3 style="font-size: 1rem; margin-bottom: 10px; color: var(--accent-1);">快速聯絡</h3>
+                    <a href="mailto:witt3c@gmail.com" style="color: var(--text-primary); text-decoration: none; font-size: 0.9rem;">witt3c@gmail.com</a>
+                    <div class="visitor-stats" style="margin-top: 15px; font-size: 0.75rem; color: var(--text-secondary);">
+                        <span id="busuanzi_container_site_pv" style="display:none">
+                            累積訪問量: <span id="busuanzi_value_site_pv" class="stats-number">--</span>
+                        </span>
+                        <p style="margin-top: 5px;">© 2026 Witt3c Studio.</p>
+                    </div>
                 </div>
-                <p>© 2026 Witt3c Studio. All Rights Reserved.</p>
-                <div class="visitor-stats">
-                    <span id="busuanzi_container_site_pv" style="display:none">
-                        Total Access: <span id="busuanzi_value_site_pv" class="stats-number">--</span>
-                    </span>
-                </div>
-            </footer>
+            </div>
+
         </main>
     </div>
 
