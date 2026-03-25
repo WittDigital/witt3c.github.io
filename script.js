@@ -198,40 +198,55 @@ async function updateDiscordStatus() {
     }
 }
 
+// --- 📍 OwnTracks + Google Fit 數據串接 ---
 async function updateLiveLocation() {
     const geoText = document.querySelector('#geo-status .status-text');
-    const stepText = document.querySelector('#step-status .status-text'); // 確保 HTML ID 是 step-status
+    const stepText = document.querySelector('#step-status .status-text');
     const geoLed = document.querySelector('#geo-status .status-led');
     const stepLed = document.querySelector('#step-status .status-led');
     
     const workerUrl = 'https://delicate-silence-d26f.witt3c-event.workers.dev'; 
 
     try {
-        const response = await fetch(workerUrl);
+        const response = await fetch(`${workerUrl}?t=${Date.now()}`);
         const data = await response.json();
         
         if (data.name) {
-            // 1. 更新位置
-            // 這裡處理 "下午11:02:36" 抓取中間的時間部分
-            const timeStr = data.time.split(' ')[1] || ""; 
-            geoText.innerHTML = `${data.name} <div style="font-size: 0.65rem; opacity: 0.4; margin-top:2px;">更新時間 ${timeStr}</div>`;
+            // 1. 更新位置：顯示 "嘉義市 西區"，下方顯示微縮時間
+            // 從 "2026/3/25 下午1:49:46" 抓取時間部分
+            const timePart = data.time.split(' ')[1] || ""; 
+            geoText.innerHTML = `
+                ${data.name} 
+                <div style="font-size: 0.6rem; opacity: 0.4; margin-top:2px;">
+                    ${timePart}
+                </div>
+            `;
             
-            // 2. 更新步數
+            // 2. 更新步數：加上千分位與單位
             if (stepText) {
                 const stepCount = (data.steps || 0).toLocaleString();
-                stepText.innerHTML = `${stepCount} <span style="font-size: 0.7rem; opacity: 0.5;">STEPS</span>`;
+                stepText.innerHTML = `
+                    ${stepCount} 
+                    <span style="font-size: 0.65rem; opacity: 0.5; display:block;">STEPS</span>
+                `;
             }
 
-            // 3. 點亮燈號
-            [geoLed, stepLed].forEach(led => {
-                if (led) {
-                    led.style.backgroundColor = '#00ff00';
-                    led.style.boxShadow = '0 0 8px #00ff00';
-                }
-            });
+            // 3. 點亮燈號 (成功獲取數據)
+            if (geoLed) {
+                geoLed.className = 'status-led led-location';
+                geoLed.style.backgroundColor = '#00ff00';
+                geoLed.style.boxShadow = '0 0 8px #00ff00';
+            }
+            if (stepLed) {
+                stepLed.className = 'status-led led-steps';
+                // 步數可以給它一個橘黃色的呼吸燈效果
+                stepLed.style.backgroundColor = '#f39c12';
+                stepLed.style.boxShadow = '0 0 8px #f39c12';
+            }
         }
     } catch (error) {
-        console.error("位置/步數更新失敗:", error);
+        console.error("數據更新失敗:", error);
         if (geoText) geoText.innerText = "感應器離線";
+        if (stepText) stepText.innerText = "NO DATA";
     }
 }

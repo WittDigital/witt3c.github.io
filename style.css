@@ -396,6 +396,10 @@ footer {
     width: 100%;
 }
 
+
+
+
+
 .monitor-item {
     
     display: flex;
@@ -517,4 +521,9 @@ footer {
     0% { filter: brightness(1); }
     50% { filter: brightness(1.5); transform: scale(1.1); }
     100% { filter: brightness(1); }
+}
+
+#step-status .status-text {
+    white-space: nowrap;
+    line-height: 1.2;
 }
