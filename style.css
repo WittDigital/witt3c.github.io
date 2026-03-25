@@ -369,18 +369,39 @@ footer {
 
 
 
-/* 監控大框格 */
 .monitor-dashboard {
-    grid-column: 1 / -1;
+    /* 1. 核心修正：不再強制橫跨整行，讓它跟隨 Grid 寬度規則 */
+    grid-column: auto; 
+    
+    /* 2. 控制寬度：使其與天氣卡片對齊感一致 */
+    width: 100%;
+    max-width: 450px; /* 你可以根據視覺微調這個數值 */
+    
     padding: 1.5rem;
     background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .monitor-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    display: flex;             /* 改用 flex 讓內容緊湊 */
+    justify-content: space-around; /* 讓三個項目在有限寬度內均勻分布 */
+    align-items: flex-start;
+    /*justify-content: center;    讓三個項目整體置中 */
+    gap: 2rem;                /* 這裡可以手動控制三個項目之間的距離，你可以根據喜好調整 3rem ~ 5rem */
     text-align: center;
+    width: 100%;
+}
+
+.monitor-item {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
 }
 
 .monitor-header {
@@ -414,8 +435,9 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
     font-size: 0.8rem;
+    margin-top: 5px; /* 增加一點點上方間距，讓燈號不會貼在頭像下方 */
 }
 
 /* --- 🌟 跳動燈號動畫 --- */
@@ -483,4 +505,16 @@ footer {
     justify-content: center;
     font-size: 1.5rem;
     background: rgba(255, 255, 255, 0.05);
+}
+
+.led-steps {
+    background: #f39c12;
+    box-shadow: 0 0 8px #f39c12;
+    animation: led-pulse-orange 2.5s infinite;
+}
+
+@keyframes led-pulse-orange {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(1.5); transform: scale(1.1); }
+    100% { filter: brightness(1); }
 }

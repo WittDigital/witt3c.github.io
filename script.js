@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     fetchSteamStatus();
                     updateDiscordStatus(); 
                     updateLiveLocation(); // 📍 新增位置感測啟動
+                    updateLiveLocation();
                 }, 800); 
                 
             }, 1000);
@@ -194,5 +195,41 @@ async function updateDiscordStatus() {
     } catch (error) {
         text.innerText = "連線受阻";
         led.className = 'status-led led-offline';
+    }
+}
+
+async function updateLiveLocation() {
+    const geoText = document.querySelector('#geo-status .status-text');
+    const stepText = document.querySelector('#step-status .status-text'); // 👣 步數文字
+    const geoLed = document.querySelector('#geo-status .status-led');
+    const stepLed = document.querySelector('#step-status .status-led');
+    
+    const workerUrl = 'https://delicate-silence-d26f.witt3c-event.workers.dev'; 
+
+    try {
+        const response = await fetch(workerUrl);
+        const data = await response.json();
+        
+        if (data.name) {
+            // 1. 更新位置 (延用你之前的格式)
+            const updateTime = data.time.split(' ')[1] || "";
+            geoText.innerHTML = `${data.name} <div style="font-size: 0.65rem; opacity: 0.4;">更新時間 ${updateTime}</div>`;
+            
+            // 2. 更新步數 👣
+            if (stepText) {
+                const stepCount = data.steps.toLocaleString(); // 加上千分位，如 10,234
+                stepText.innerHTML = `${stepCount} <span style="font-size: 0.7rem; opacity: 0.5;">STEPS</span>`;
+            }
+
+            // 3. 點亮燈號
+            [geoLed, stepLed].forEach(led => {
+                if (led) {
+                    led.style.backgroundColor = '#00ff00';
+                    led.style.boxShadow = '0 0 8px #00ff00';
+                }
+            });
+        }
+    } catch (error) {
+        if (stepText) stepText.innerText = "感應器離線";
     }
 }
