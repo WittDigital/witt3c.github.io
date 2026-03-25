@@ -525,3 +525,58 @@ footer {
     font-size: 0.6rem;
     margin-top: -2px;
 }
+
+
+/* 電池容器 */
+.battery-container {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+}
+
+/* 電池主體 (站立式) */
+.battery-body {
+    width: 20px; height: 35px;
+    border: 2px solid var(--text-secondary);
+    border-radius: 4px;
+    position: relative;
+    padding: 2px;
+}
+
+/* 電池正極 (凸起部分) */
+.battery-cap {
+    width: 10px; height: 3px;
+    background: var(--text-secondary);
+    position: absolute;
+    top: -5px; left: 50%;
+    transform: translateX(-50%);
+    border-radius: 1px 1px 0 0;
+}
+
+/* 電池內部填滿區 */
+.battery-level {
+    width: 100%;
+    height: 0%; /* 由 JS 動態控制 */
+    background: #00ff00;
+    position: absolute;
+    bottom: 2px; left: 0;
+    transition: height 0.5s ease, background 0.5s ease;
+    border-radius: 1px;
+}
+
+/* 充電雷電圖示樣式 */
+.charging-icon {
+    position: absolute;
+    color: #f1c40f;
+    font-size: 1.2rem;
+    filter: drop-shadow(0 0 5px #f1c40f);
+    z-index: 5;
+}
+
+/* 低電量紅燈動畫 */
+@keyframes battery-low {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+.led-low-battery { background: #ff4757; box-shadow: 0 0 8px #ff4757; animation: battery-low 1s infinite; }
