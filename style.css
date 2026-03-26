@@ -356,91 +356,70 @@ html, body {
 
 
 /* --- 更新日誌卡片核心修正 --- */
+/* --- 更新日誌卡片：全功能整合版 --- */
 .card-blog {
     display: flex;
     flex-direction: column;
-    /* 這裡非常重要：限制卡片總高度，且不讓內容撐開 */
     height: 220px; 
     max-height: 220px; 
     overflow: hidden; 
     position: relative;
 }
 
-/* 確保標題高度固定，不參與捲動 */
 .card-blog .card-header {
     flex: 0 0 auto; 
     margin-bottom: 10px;
 }
 
-/* 顯示視窗：強制佔滿剩餘空間並鎖死高度 */
+/* 字幕機視窗 */
 .log-marquee-viewport {
-    flex: 1 1 auto; /* 允許伸縮但受限於父層 */
-    height: 100%;   /* 強制繼承高度 */
+    flex: 1;
     overflow: hidden;
     position: relative;
-    /* 遮罩效果 */
     mask-image: linear-gradient(transparent, black 15%, black 85%, transparent);
     -webkit-mask-image: linear-gradient(transparent, black 15%, black 85%, transparent);
 }
 
-/* 捲動內容容器 */
+/* 捲動內容容器 (關鍵：必須有 position: absolute 且 top: 0) */
 .log-marquee-content {
     display: flex;
     flex-direction: column;
-    position: absolute; /* 使用絕對定位來脫離文檔流，避免撐開容器 */
+    position: absolute; 
     width: 100%;
     top: 0;
     left: 0;
     animation: scrollLog 20s linear infinite;
 }
 
-/* 滑鼠懸停暫停 */
 .log-marquee-content:hover {
     animation-play-state: paused;
 }
 
-/* 日誌項：確保文字溢出時隱藏，不影響寬度 */
-.log-item {
-    font-family: 'monospace';
-    font-size: 0.85rem;
-    color: var(--accent-1);
-    padding: 8px 0;
-    border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; /* 文字過長顯示省略號 */
-}
-
-/* 動畫邏輯：向上位移 */
-@keyframes scrollLog {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-50%); }
-}
-
-
-/* 日誌單條項目 */
+/* --- 單條日誌項目樣式整合 --- */
 .log-item {
     padding: 12px 0;
     border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
     display: flex;
     flex-direction: column;
     gap: 4px;
+    width: 100%;
 }
 
-/* 專案標題列：紫色調 (使用你的 --accent-3) */
+/* 專案標題列：紫色 */
 .log-title {
     font-size: 0.85rem;
     font-weight: 700;
-    color: var(--accent-3); /* 主題紫色 */
+    color: var(--accent-3); 
     display: flex;
     align-items: center;
     gap: 8px;
+    white-space: nowrap;
 }
 
-/* 版本號與日期微調 */
+/* 版本號與日期 */
 .log-title .v-num {
-    color: var(--accent-1); /* 淺藍紫色增加層次 */
-    font-size: 0.75rem;
+    color: var(--accent-1); 
+    font-size: 0.7rem;
     background: rgba(139, 92, 246, 0.1);
     padding: 0 5px;
     border-radius: 4px;
@@ -455,7 +434,7 @@ html, body {
 /* 更新內容：純白色 */
 .log-detail {
     font-size: 0.8rem;
-    color: #ffffff; /* 強制純白 */
+    color: #ffffff; 
     opacity: 0.9;
     padding-left: 2px;
     white-space: nowrap;
@@ -463,4 +442,8 @@ html, body {
     text-overflow: ellipsis;
 }
 
-
+/* 捲動動畫 */
+@keyframes scrollLog {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+}
