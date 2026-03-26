@@ -389,7 +389,7 @@ html, body {
     width: 100%;
     top: 0;
     left: 0;
-    animation: scrollLog 10s linear infinite;
+    animation: scrollLog 20s linear infinite;
 }
 
 .log-marquee-content:hover {
@@ -451,140 +451,64 @@ html, body {
 
 
 
-/* --- 極客儀表板卡片核心 --- */
-.card-article-geek {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 1.2rem !important;
-    position: relative;
-    overflow: hidden;
-}
 
-.geek-header {
+
+
+
+
+
+
+
+/* --- 三位一體切換卡片 --- */
+.card-trinity { display: flex; flex-direction: column; gap: 15px; padding: 1rem !important; }
+
+.trinity-controls {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    gap: 10px;
     border-bottom: 1px solid var(--glass-border);
-    padding-bottom: 8px;
+    padding-bottom: 10px;
+}
+
+.t-btn {
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    padding: 5px 12px;
+    font-size: 0.65rem;
     font-family: 'Outfit', sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 4px;
+}
+
+.t-btn.active {
+    border-color: var(--accent-1);
     color: var(--accent-1);
+    background: rgba(129, 140, 248, 0.1);
+    box-shadow: 0 0 10px rgba(129, 140, 248, 0.2);
 }
 
-.pulse-node {
-    width: 6px;
-    height: 6px;
-    background: #2ecc71;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 5px;
-    box-shadow: 0 0 5px #2ecc71;
-    animation: led-pulse-green 1s infinite;
-}
+/* 預覽區塊控制 */
+.trinity-display { position: relative; height: 130px; }
 
-/* 內容主體 */
-.geek-content-body {
-    display: flex;
-    gap: 20px;
+.blog-preview {
+    display: none; /* 預設隱藏 */
+    gap: 15px;
     text-decoration: none;
     color: inherit;
+    animation: slideIn 0.4s ease forwards;
 }
 
-/* 縮圖視窗特效 */
-.article-thumb-window {
-    flex: 0 0 180px;
-    height: 120px;
-    background: #000;
-    border-radius: 8px;
-    overflow: hidden;
-    position: relative;
-    border: 1px solid var(--glass-border);
-}
+.blog-preview.active { display: flex; }
 
-.article-thumb-window img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.6;
-    transition: 0.3s;
-    filter: sepia(100%) hue-rotate(220deg) brightness(0.8); /* 科技藍調 */
-}
+.preview-img { flex: 0 0 120px; height: 90px; border-radius: 8px; overflow: hidden; }
+.preview-img img { width: 100%; height: 100%; object-fit: cover; }
 
-.card-article-geek:hover .article-thumb-window img {
-    opacity: 1;
-    filter: none;
-}
+.preview-text h4 { font-size: 1rem; color: #fff; margin: 4px 0; }
+.preview-text p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; }
+.p-cat { font-size: 0.6rem; color: var(--accent-1); font-weight: 700; }
 
-/* 掃描線 */
-.scanline {
-    width: 100%;
-    height: 2px;
-    background: rgba(129, 140, 248, 0.3);
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    animation: scanMove 3s linear infinite;
-    box-shadow: 0 0 10px var(--accent-1);
-}
-
-/* 右側文字流 */
-.article-info-stream {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.article-category-tag {
-    font-size: 0.65rem;
-    color: var(--accent-3);
-    font-weight: 700;
-}
-
-.article-main-title {
-    font-size: 1.1rem;
-    margin: 5px 0;
-    color: #fff;
-    line-height: 1.3;
-}
-
-.article-excerpt {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.article-meta-data {
-    margin-top: 10px;
-    font-size: 0.7rem;
-    color: #666;
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}
-
-.read-more-btn {
-    margin-left: auto;
-    color: var(--accent-1);
-    font-weight: 700;
-    border: 1px solid var(--accent-1);
-    padding: 2px 8px;
-    border-radius: 4px;
-    transition: 0.3s;
-}
-
-.card-article-geek:hover .read-more-btn {
-    background: var(--accent-1);
-    color: #000;
-}
-
-@keyframes scanMove {
-    0% { top: 0%; }
-    100% { top: 100%; }
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(10px); }
+    to { opacity: 1; transform: translateX(0); }
 }

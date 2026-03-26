@@ -295,3 +295,13 @@ async function updateLiveLocation() {
         if (geoText) geoText.innerText = "衛星訊號中斷";
     }
 }
+
+function switchBlog(type) {
+    // 1. 切換按鈕狀態
+    document.querySelectorAll('.t-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    // 2. 切換內容顯示
+    document.querySelectorAll('.blog-preview').forEach(content => content.classList.remove('active'));
+    document.getElementById('blog-' + type).classList.add('active');
+}

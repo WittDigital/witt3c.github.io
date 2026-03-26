@@ -280,35 +280,42 @@
                 </div>
             </div>
 
-            <div class="portal-card card-article-geek card-size-2">
-                <div class="geek-header">
-                    <div class="geek-title">
-                        <i class="fas fa-terminal"></i> LATEST_POST_FETCHED
-                    </div>
-                    <div class="geek-status">
-                        <span class="pulse-node"></span> ENCRYPTED_LINK
-                    </div>
+            <div class="portal-card card-trinity card-size-2">
+                <div class="trinity-controls">
+                    <button class="t-btn active" onclick="switchBlog('tech')">TECH_3C</button>
+                    <button class="t-btn" onclick="switchBlog('travel')">TRAVEL_FOOD</button>
+                    <button class="t-btn" onclick="switchBlog('fix')">FIX_PLUMBING</button>
                 </div>
 
-                <a href="https://cellus709.pixnet.net/blog" target="_blank" class="geek-content-body">
-                    <div class="article-thumb-window">
-                        <img src="assets/images/witt3clife.PNG" alt="Article Thumbnail">
-                        <div class="scanline"></div>
-                    </div>
-
-                    <div class="article-info-stream">
-                        <div class="article-category-tag">SYSTEM_LOG // 3C_TECH</div>
-                        <h2 class="article-main-title">2026 年度桌面配置：從水電工到開發者的核心裝備</h2>
-                        <p class="article-excerpt">
-                            探討如何在高強度的工程維修與代碼開發之間，打造一套兼具實用與美感的桌面生態系...
-                        </p>
-                        <div class="article-meta-data">
-                            <span><i class="far fa-clock"></i> 2026.03.26</span>
-                            <span><i class="fas fa-database"></i> 4.2 KB</span>
-                            <span class="read-more-btn">EXECUTE_READ ></span>
+                <div class="trinity-display">
+                    <a id="blog-tech" class="blog-preview active" href="https://cellus709.pixnet.net/blog"
+                        target="_blank">
+                        <div class="preview-img"><img src="assets/images/witt3clife.PNG"></div>
+                        <div class="preview-text">
+                            <span class="p-cat">LATEST_POST // TECH</span>
+                            <h4>2026 年度桌面配置：從水電工到開發者的核心裝備</h4>
+                            <p>探索如何在工程與代碼之間，打造高效桌面生態系...</p>
                         </div>
-                    </div>
-                </a>
+                    </a>
+
+                    <a id="blog-travel" class="blog-preview" href="https://witttravel.pixnet.net/blog" target="_blank">
+                        <div class="preview-img"><img src="assets/images/witttravel.png"></div>
+                        <div class="preview-text">
+                            <span class="p-cat">LATEST_POST // TRAVEL</span>
+                            <h4>嘉義巷弄食記：隱藏在老屋裡的職人手作料理</h4>
+                            <p>穿梭城市角落，尋找那些不被導航標記的美食記憶...</p>
+                        </div>
+                    </a>
+
+                    <a id="blog-fix" class="blog-preview" href="https://uconge88.pixnet.net/blog" target="_blank">
+                        <div class="preview-img"><img src="assets/images/wittHandyman.png"></div>
+                        <div class="preview-text">
+                            <span class="p-cat">LATEST_POST // FIX</span>
+                            <h4>漏水維修實錄：如何精準判斷壁內管路滲漏點</h4>
+                            <p>專業水電實務分享，教你用科學方法解決居家疑難雜症...</p>
+                        </div>
+                    </a>
+                </div>
             </div>
 
             <div class="card-size-1">
