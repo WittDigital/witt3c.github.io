@@ -216,34 +216,40 @@ async function updateDiscordStatus() {
     }
 }
 
-// --- 6. 🌟 三位一體：分類切換與自動文章輪播 ---
+
 // --- 6. 🌟 三位一體：分類切換與自動文章輪播 ---
 let autoTimer; 
 
 // 顯式掛載到 window，確保 HTML 的 onclick 絕對找得到它
 window.switchBlog = function(type, btnElement = null) {
-    // 1. 清除舊定時器
     if (autoTimer) clearInterval(autoTimer);
 
-    console.log("切換分類至:", type); // 👈 加入這行，按按鈕時 F12 檢查有沒有跳字
-
-    // 2. 切換按鈕狀態
+    // 1. 處理按鈕狀態切換
     document.querySelectorAll('.t-btn').forEach(btn => btn.classList.remove('active'));
     
-    // 如果是點擊觸發，btnElement 會有值；如果是自動觸發，則搜尋 DOM
-    let targetBtn = btnElement;
-    if (!targetBtn) {
-        targetBtn = document.querySelector(`.t-btn[onclick*="'${type}'"]`);
+    // 如果傳入的是 event 而不是元素，這裡做個轉向處理
+    let realBtn = (btnElement instanceof HTMLElement) ? btnElement : null;
+    
+    // 如果沒有抓到實體按鈕，則根據 type 搜尋
+    if (!realBtn) {
+        realBtn = document.querySelector(`.t-btn[onclick*="'${type}'"]`);
     }
     
-    if (targetBtn) targetBtn.classList.add('active');
+    if (realBtn) realBtn.classList.add('active');
 
-    // ... 剩下的邏輯保持不變 ...
-    document.querySelectorAll('.blog-group').forEach(group => group.classList.remove('active'));
+    // 2. 切換文章組別
+    document.querySelectorAll('.blog-group').forEach(group => {
+        group.classList.remove('active');
+        group.style.display = 'none'; // 確保徹底隱藏
+    });
+
     const activeGroup = document.getElementById('group-' + type);
     if (!activeGroup) return;
+    
     activeGroup.classList.add('active');
+    activeGroup.style.display = 'flex'; // 確保顯示
 
+    // 3. 重置輪播
     const items = activeGroup.querySelectorAll('.sub-item');
     if (items.length === 0) return;
 
@@ -251,6 +257,7 @@ window.switchBlog = function(type, btnElement = null) {
     items.forEach(item => item.classList.remove('active'));
     items[0].classList.add('active');
 
+    // 4. 重新啟動定時器
     autoTimer = setInterval(() => {
         items[currentIndex].classList.remove('active');
         currentIndex = (currentIndex + 1) % items.length;
