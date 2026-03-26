@@ -148,7 +148,7 @@ html, body {
 /* ==========================================================================
    7. 監控儀表板 (Monitor Dashboard - 5 欄位)
    ========================================================================== */
-.monitor-dashboard { width: 100%; max-width: none !important; padding: 1.5rem; display: flex; flex-direction: column; justify-content: center; }
+.monitor-dashboard { width: 100%; max-width: none !important; padding: 0.8rem; display: flex; flex-direction: column; justify-content: center; }
 .monitor-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; align-items: start; text-align: center; width: 100%; }
 .monitor-header { font-size: 0.7rem; font-weight: 900; color: var(--text-secondary); letter-spacing: 1px; margin-bottom: 10px; }
 
@@ -175,7 +175,7 @@ html, body {
 /* ==========================================================================
    8. 天氣與部落格細節 (Weather & Blog Units)
    ========================================================================== */
-.weather-dashboard-card { display: flex; flex-direction: column; justify-content: center; min-height: 180px; padding: 1.5rem; }
+.weather-dashboard-card { display: flex; flex-direction: column; justify-content: center; min-height: 180px; padding: 0.8rem; }
 .weather-mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; width: 100%; margin: auto 0; }
 .mini-weather-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 6px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
 .mini-city-name { font-size: 0.9rem; min-width: 50px; }
@@ -201,17 +201,17 @@ html, body {
 .card-trinity { display: flex; flex-direction: column; gap: 15px; padding: 1.2rem !important; min-height: 250px; }
 .trinity-controls { display: flex; gap: 10px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; flex-shrink: 0; }
 
-.t-btn { background: transparent; border: 1px solid var(--glass-border); color: var(--text-secondary); padding: 5px 12px; font-size: 0.65rem; font-family: 'Outfit', sans-serif; cursor: pointer; transition: 0.3s; border-radius: 4px; }
+.t-btn { background: transparent; border: 1px solid var(--glass-border); color: var(--text-secondary); padding: 5px 12px; font-size: 0.85rem; font-family: 'Outfit', sans-serif; cursor: pointer; transition: 0.3s; border-radius: 4px; }
 .t-btn.active { border-color: var(--accent-1); color: var(--accent-1); background: rgba(129, 140, 248, 0.1); box-shadow: 0 0 10px rgba(129, 140, 248, 0.2); }
 
 .trinity-display { position: relative; height: 110px; overflow: hidden; flex-grow: 1; display: flex; align-items: center; justify-content: center; }
 .blog-group { display: none; flex-direction: column; width: 100%; }
 .blog-group.active { display: flex; }
 
-.sub-item { display: none; gap: 12px; text-decoration: none; color: inherit; width: 100%; align-items: center; }
+.sub-item { display: none; gap: 38px; text-decoration: none; color: inherit; width: 100%; align-items: center; }
 .sub-item.active { display: flex; animation: fadin-up 0.5s cubic-bezier(0.19, 1, 0.22, 1) forwards; }
 
-.preview-img { flex: 0 0 270px; height: 180px; border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border); }
+.preview-img { flex: 0 0 225px; height: 150px; border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border); }
 .preview-img img { width: 100%; height: 100%; object-fit: cover; }
 
 .preview-text { flex: 1; display: flex; flex-direction: column; justify-content: center; }
