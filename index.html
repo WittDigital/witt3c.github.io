@@ -282,39 +282,95 @@
 
             <div class="portal-card card-trinity card-size-2">
                 <div class="trinity-controls">
-                    <button class="t-btn active" onclick="switchBlog('tech')">TECH_3C</button>
-                    <button class="t-btn" onclick="switchBlog('travel')">TRAVEL_FOOD</button>
-                    <button class="t-btn" onclick="switchBlog('fix')">FIX_PLUMBING</button>
+                    <button class="t-btn active" onclick="switchBlog('tech', event)">TECH_3C</button>
+                    <button class="t-btn" onclick="switchBlog('travel', event)">TRAVEL_FOOD</button>
+                    <button class="t-btn" onclick="switchBlog('fix', event)">FIX_PLUMBING</button>
                 </div>
 
                 <div class="trinity-display">
-                    <a id="blog-tech" class="blog-preview active" href="https://cellus709.pixnet.net/blog"
-                        target="_blank">
-                        <div class="preview-img"><img src="assets/images/witt3clife.PNG"></div>
-                        <div class="preview-text">
-                            <span class="p-cat">LATEST_POST // TECH</span>
-                            <h4>2026 年度桌面配置：從水電工到開發者的核心裝備</h4>
-                            <p>探索如何在工程與代碼之間，打造高效桌面生態系...</p>
-                        </div>
-                    </a>
 
-                    <a id="blog-travel" class="blog-preview" href="https://witttravel.pixnet.net/blog" target="_blank">
-                        <div class="preview-img"><img src="assets/images/witttravel.png"></div>
-                        <div class="preview-text">
-                            <span class="p-cat">LATEST_POST // TRAVEL</span>
-                            <h4>嘉義巷弄食記：隱藏在老屋裡的職人手作料理</h4>
-                            <p>穿梭城市角落，尋找那些不被導航標記的美食記憶...</p>
-                        </div>
-                    </a>
+                    <div id="group-tech" class="blog-group active">
+                        <a class="blog-preview sub-item active" href="https://cellus709.pixnet.net/blog"
+                            target="_blank">
+                            <div class="preview-img"><img src="assets/images/witt3clife.PNG"></div>
+                            <div class="preview-text">
+                                <span class="p-cat">LATEST_POST // TECH_01</span>
+                                <h4>2026 年度桌面配置：從水電工到開發者的核心裝備</h4>
+                                <p>探索如何在工程與代碼之間，打造高效桌面生態系...</p>
+                            </div>
+                        </a>
+                        <a class="blog-preview sub-item" href="https://cellus709.pixnet.net/blog" target="_blank">
+                            <div class="preview-img"><img src="assets/images/witt3clife.PNG"></div>
+                            <div class="preview-text">
+                                <span class="p-cat">LATEST_POST // TECH_02</span>
+                                <h4>React Native 效能優化指南：讓你的 App 跑得更順</h4>
+                                <p>針對老舊設備的優化策略，提升用戶操作的流暢度...</p>
+                            </div>
+                        </a>
+                        <a class="blog-preview sub-item" href="https://cellus709.pixnet.net/blog" target="_blank">
+                            <div class="preview-img"><img src="assets/images/witt3clife.PNG"></div>
+                            <div class="preview-text">
+                                <span class="p-cat">LATEST_POST // TECH_03</span>
+                                <h4>從零開始的 Discord Bot 開發實錄</h4>
+                                <p>如何用 Node.js 打造一個屬於社群的自動化小管家...</p>
+                            </div>
+                        </a>
+                    </div>
 
-                    <a id="blog-fix" class="blog-preview" href="https://uconge88.pixnet.net/blog" target="_blank">
-                        <div class="preview-img"><img src="assets/images/wittHandyman.png"></div>
-                        <div class="preview-text">
-                            <span class="p-cat">LATEST_POST // FIX</span>
-                            <h4>漏水維修實錄：如何精準判斷壁內管路滲漏點</h4>
-                            <p>專業水電實務分享，教你用科學方法解決居家疑難雜症...</p>
-                        </div>
-                    </a>
+                    <div id="group-travel" class="blog-group">
+                        <a class="blog-preview sub-item active" href="https://witttravel.pixnet.net/blog"
+                            target="_blank">
+                            <div class="preview-img"><img src="assets/images/witttravel.png"></div>
+                            <div class="preview-text">
+                                <span class="p-cat">LATEST_POST // TRAVEL_01</span>
+                                <h4>嘉義巷弄食記：隱藏在老屋裡的職人手作料理</h4>
+                                <p>穿梭城市角落，尋找那些不被導航標記的美食記憶...</p>
+                            </div>
+                        </a>
+                        <a class="blog-preview sub-item" href="https://witttravel.pixnet.net/blog" target="_blank">
+                            <div class="preview-img"><img src="assets/images/witttravel.png"></div>
+                            <div class="preview-text">
+                                <span class="p-cat">LATEST_POST // TRAVEL_02</span>
+                                <h4>阿里山雲海追蹤：推薦給開發者的放空避世所</h4>
+                                <p>在深山綠意中，找回被程式碼填滿的靈感...</p>
+                            </div>
+                        </a>
+                        <a class="blog-preview sub-item" href="https://witttravel.pixnet.net/blog" target="_blank">
+                            <div class="preview-img"><img src="assets/images/witttravel.png"></div>
+                            <div class="preview-text">
+                                <span class="p-cat">LATEST_POST // TRAVEL_03</span>
+                                <h4>深夜食堂系列：台北街頭最療癒的宵夜地圖</h4>
+                                <p>那些在趕工之後，支撐著獨立開發者的熱騰騰美味...</p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div id="group-fix" class="blog-group">
+                        <a class="blog-preview sub-item active" href="https://uconge88.pixnet.net/blog" target="_blank">
+                            <div class="preview-img"><img src="assets/images/wittHandyman.png"></div>
+                            <div class="preview-text">
+                                <span class="p-cat">LATEST_POST // FIX_01</span>
+                                <h4>漏水維修實錄：如何精準判斷壁內管路滲漏點</h4>
+                                <p>專業水電實務分享，教你用科學方法解決居家疑難雜症...</p>
+                            </div>
+                        </a>
+                        <a class="blog-preview sub-item" href="https://uconge88.pixnet.net/blog" target="_blank">
+                            <div class="preview-img"><img src="assets/images/wittHandyman.png"></div>
+                            <div class="preview-text">
+                                <span class="p-cat">LATEST_POST // FIX_02</span>
+                                <h4>老屋配電盤更新：安全用電的第一道防線</h4>
+                                <p>為什麼舊屋改建一定要先看電箱？這篇文章告訴你實話...</p>
+                            </div>
+                        </a>
+                        <a class="blog-preview sub-item" href="https://uconge88.pixnet.net/blog" target="_blank">
+                            <div class="preview-img"><img src="assets/images/wittHandyman.png"></div>
+                            <div class="preview-text">
+                                <span class="p-cat">LATEST_POST // FIX_03</span>
+                                <h4>從扳手到鍵盤：我是如何將水電邏輯應用在 Coding 上</h4>
+                                <p>跨界思維分享，原來修水管跟除 Debug 其實很像...</p>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
 

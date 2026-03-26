@@ -296,12 +296,37 @@ async function updateLiveLocation() {
     }
 }
 
-function switchBlog(type) {
-    // 1. 切換按鈕狀態
-    document.querySelectorAll('.t-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
 
-    // 2. 切換內容顯示
-    document.querySelectorAll('.blog-preview').forEach(content => content.classList.remove('active'));
-    document.getElementById('blog-' + type).classList.add('active');
+
+let autoTimer; // 用來存放定時器
+
+function switchBlog(type) {
+    // 1. 清除舊的定時器（避免切換類別時衝突）
+    clearInterval(autoTimer);
+
+    // 2. 切換按鈕與組別顯示
+    document.querySelectorAll('.t-btn').forEach(btn => btn.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+
+    document.querySelectorAll('.blog-group').forEach(group => group.classList.remove('active'));
+    const activeGroup = document.getElementById('group-' + type);
+    activeGroup.classList.add('active');
+
+    // 3. 重置該組的文章顯示，從第一篇開始
+    const items = activeGroup.querySelectorAll('.sub-item');
+    items.forEach(item => item.classList.remove('active'));
+    items[0].classList.add('active');
+
+    // 4. 開啟自動輪播
+    let currentIndex = 0;
+    autoTimer = setInterval(() => {
+        items[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % items.length; // 循環 0, 1, 2
+        items[currentIndex].classList.add('active');
+    }, 2000); // 2000 毫秒 = 2 秒
 }
+
+// 頁面載入時預設啟動第一組
+window.onload = () => {
+    switchBlog('tech');
+};
