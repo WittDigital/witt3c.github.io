@@ -418,6 +418,49 @@ html, body {
 }
 
 
+/* 日誌單條項目 */
+.log-item {
+    padding: 12px 0;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
 
+/* 專案標題列：紫色調 (使用你的 --accent-3) */
+.log-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent-3); /* 主題紫色 */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 版本號與日期微調 */
+.log-title .v-num {
+    color: var(--accent-1); /* 淺藍紫色，增加層次 */
+    font-size: 0.75rem;
+    background: rgba(139, 92, 246, 0.1);
+    padding: 0 5px;
+    border-radius: 4px;
+}
+
+.log-title .date {
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    font-weight: normal;
+}
+
+/* 更新內容：純白色 */
+.log-detail {
+    font-size: 0.8rem;
+    color: #ffffff; /* 強制純白 */
+    opacity: 0.9;
+    padding-left: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 
