@@ -355,7 +355,61 @@ html, body {
 
 
 
+/* 字幕機卡片內部對齊 */
+.card-blog {
+    display: flex;
+    flex-direction: column;
+    height: 180px; /* 固定高度 */
+    overflow: hidden;
+}
 
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+/* 顯示視窗：像一個開口，只看得到中間的部分 */
+.log-marquee-viewport {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(transparent, black 20%, black 80%, transparent); /* 上下淡出效果，更有工程感 */
+    -webkit-mask-image: linear-gradient(transparent, black 20%, black 80%, transparent);
+}
+
+/* 捲動內容容器 */
+.log-marquee-content {
+    display: flex;
+    flex-direction: column;
+    animation: scrollLog 15s linear infinite; /* 調整秒數可改變捲動速度 */
+}
+
+/* 當滑鼠移上去時暫停，方便閱讀 */
+.log-marquee-content:hover {
+    animation-play-state: paused;
+}
+
+/* 每一行日誌的樣式 */
+.log-item {
+    font-family: 'monospace'; /* 使用等寬字體，更有代碼感 */
+    font-size: 0.8rem;
+    color: var(--accent-1);
+    padding: 6px 0;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+    white-space: nowrap;
+}
+
+/* 向上捲動動畫邏輯 */
+@keyframes scrollLog {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-50%); /* 捲動到一半時重置，達成無縫循環 */
+    }
+}
 
 
 
