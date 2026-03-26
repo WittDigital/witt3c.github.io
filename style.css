@@ -270,16 +270,122 @@ html, body {
 .pulse-dot { width: 6px; height: 6px; background: #ff4757; border-radius: 50%; margin-left: 8px; display: inline-block; box-shadow: 0 0 8px #ff4757; animation: flash 1.5s infinite; }
 
 /* ==========================================================================
-   12. 響應式佈局 (Responsive Design)
+   12. 響應式佈局 (Responsive Design) - Witt3C 專屬優化
    ========================================================================== */
+
+/* --- [1] 平板與小螢幕筆電 (1200px 以下) --- */
 @media (max-width: 1200px) {
-    .portal-grid { grid-template-columns: 1fr; }
-    .card-size-2, .card-size-1 { grid-column: span 1; }
-    .monitor-grid { grid-template-columns: repeat(3, 1fr); } 
+    .main-layout {
+        padding: 2rem;
+        gap: 2rem;
+    }
+    
+    .sidebar.active-left {
+        width: 350px; /* 縮小側邊欄寬度給右側空間 */
+    }
+
+    .portal-grid {
+        grid-template-columns: 1fr; /* 右側網格改為單欄，避免卡片太擠 */
+    }
+
+    .card-size-2 {
+        grid-column: span 1;
+    }
 }
 
+/* --- [2] 平板直向與大手機 (1024px 以下) --- */
 @media (max-width: 1024px) {
-    .main-layout { flex-direction: column; padding: 1.5rem; overflow-y: auto; height: auto; }
-    html, body { overflow: auto; }
-    .sidebar.active-left { width: 100%; height: auto; position: relative; top: 0; } 
+    html, body {
+        overflow: auto; /* 恢復滾動 */
+    }
+
+    .main-layout {
+        flex-direction: column; /* 改為上下佈局 */
+        height: auto;
+        padding: 1.5rem;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .sidebar.active-left {
+        width: 100%; /* 側邊欄全寬 */
+        max-height: none;
+        position: relative !important;
+        top: 0;
+        margin-bottom: 1.5rem;
+        padding: 2rem;
+    }
+
+    .portal-grid {
+        width: 100%;
+        max-height: none;
+        overflow: visible;
+        padding-right: 0;
+    }
+}
+
+/* --- [3] 標準手機尺寸 (768px 以下) --- */
+@media (max-width: 768px) {
+    /* 調整字體與標題 */
+    .main-title { font-size: 2.2rem; }
+    .sidebar.active-left .main-title { font-size: 1.8rem; }
+    
+    /* 聯絡資訊改為 3 欄，避免太擠 */
+    .contact-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px 5px;
+    }
+
+    /* 監控面板調整：5 欄在手機上太小，改為 2 欄 */
+    .monitor-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    /* 三部落格介紹調整：改為垂直堆疊 */
+    .blog-columns-inner {
+        grid-template-columns: 1fr;
+    }
+
+    .blog-unit {
+        padding: 15px;
+    }
+
+    /* 文章預覽調整：圖片改為上方，文字下方 */
+    .sub-item {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .preview-img {
+        width: 100%;
+        height: 180px;
+        flex: none;
+    }
+
+    .trinity-display {
+        height: auto; /* 解除高度限制 */
+        min-height: 350px;
+    }
+
+    .trinity-controls {
+        flex-wrap: wrap; /* 按鈕自動換行 */
+        justify-content: center;
+    }
+
+    .t-btn {
+        flex: 1 1 auto;
+        text-align: center;
+    }
+}
+
+/* --- [4] 極小手機 (480px 以下) --- */
+@media (max-width: 480px) {
+    .monitor-grid {
+        grid-template-columns: 1fr; /* 監控項改為單欄 */
+    }
+
+    .contact-grid {
+        grid-template-columns: repeat(2, 1fr); /* 聯絡方式改為 2 欄 */
+    }
 }
