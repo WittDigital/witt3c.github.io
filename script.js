@@ -254,36 +254,38 @@ function startLogRoller() {
     }, 3000);
 }
 
-// --- 8. 🌟 搞笑圖片後備機制 (防止圖片離家出走) ---
-document.addEventListener('DOMContentLoaded', () => {
-    // 📢 設定你的搞笑後備圖片路徑
-    const runawayImgPath = 'assets/images/img-runaway.png'; 
+// --- 8. 🌟 Witt3C 圖片自動維修系統 (進階全域版) ---
+(function() {
+    const runawayImg = 'assets/images/img-runaway.png';
 
-    // 🕵️‍♂️ 抓取頁面上所有需要監控的圖片 (側邊欄頭貼 + 監控儀表板頭貼)
-    const monitorImages = document.querySelectorAll('.avatar-img, .monitor-avatar');
+    // 使用「捕獲模式 (Capture Phase)」監聽錯誤
+    // 這樣不論圖片是靜態的還是後來動態產生的，只要報錯都能抓到
+    window.addEventListener('error', function(e) {
+        // 確認發生錯誤的是圖片標籤
+        if (e.target.tagName === 'IMG') {
+            const img = e.target;
+            
+            // 防止無限迴圈（如果連搞笑圖也 404 的話就停止）
+            if (img.src.includes('img-runaway.png')) return;
 
-    monitorImages.forEach(img => {
-        // 🛑 當圖片載入失敗 (onerror) 時觸發
-        img.onerror = function() {
-            console.warn(`🛑 報告！圖片 [${this.src.split('/').pop()}] 真的離家出走了...`);
+            console.warn(`🔧 水電工巡檢：發現離家出走的圖片 -> ${img.src}`);
             
-            // 1. 替換成搞笑圖
-            this.src = runawayImgPath;
+            // 1. 立即更換為搞笑圖
+            img.src = runawayImg;
             
-            // 2. 移除原本的圓形或特定樣式，確保搞笑圖顯示完整 (選填)
-            this.style.borderRadius = '8px'; 
-            this.style.objectFit = 'contain'; // 確保搞笑圖不被裁切
-            this.style.background = 'rgba(255,0,0,0.1)'; // 加一點淡淡的紅色警告背景
-
-            // 3. 修改 alt 說明，增加幽默感
-            this.alt = '哇哇！這張圖片離家出走了，可能是去修水管了吧？';
+            // 2. 自動修正樣式，確保在小格子或圓框裡不變形
+            img.style.objectFit = 'cover';
+            img.style.borderRadius = '8px'; // 稍微給一點圓角
             
-            // 4. 如果是 Steam 或 Discord，順便把文字改掉 (選填，更有整體感)
-            const parentItem = this.closest('.monitor-item');
-            if (parentItem) {
-                const statusText = parentItem.querySelector('.status-text');
-                if (statusText) statusText.innerText = '圖片去旅行了 🧳';
+            // 3. 連動修改文字說明 (如果有監控面板文字的話)
+            const monitorItem = img.closest('.monitor-item');
+            if (monitorItem) {
+                const statusText = monitorItem.querySelector('.status-text');
+                if (statusText) {
+                    statusText.innerText = '圖片去旅行了 🧳';
+                    statusText.style.color = '#ffb86c'; // 給一個警告的橘色
+                }
             }
-        };
-    });
-});
+        }
+    }, true); // 這個 true 非常重要，代表在錯誤發生的第一時間就攔截
+})();
